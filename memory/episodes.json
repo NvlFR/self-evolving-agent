@@ -334,5 +334,530 @@
       "score": 1.0499919652938843,
       "base_score": 0.9999919652938842
     }
+  },
+  {
+    "timestamp": "2026-05-26T17:56:10.069949",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply planner mutation: increase max_steps to 10",
+      "modification_success": true,
+      "benchmark_score": 0.999979829788208,
+      "snapshot": "versions/snapshot_20260526_175610_065076",
+      "evaluation": {
+        "success": true,
+        "score": 0.999979829788208,
+        "base_score": 0.999979829788208
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.999979829788208,
+      "base_score": 0.999979829788208
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:56:10.076965",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply planner mutation: reduce max_steps to 3",
+      "modification_success": true,
+      "benchmark_score": 1.0499648928642273,
+      "snapshot": "versions/snapshot_20260526_175610_071625",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499648928642273,
+        "base_score": 0.9999648928642273
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499648928642273,
+      "base_score": 0.9999648928642273
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:56:10.083593",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 1.0499834871292115,
+      "snapshot": "versions/snapshot_20260526_175610_079501",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499834871292115,
+        "base_score": 0.9999834871292115
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499834871292115,
+      "base_score": 0.9999834871292115
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:56:10.091036",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.049981379508972,
+      "snapshot": "versions/snapshot_20260526_175610_086276",
+      "evaluation": {
+        "success": true,
+        "score": 1.049981379508972,
+        "base_score": 0.9999813795089721
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049981379508972,
+      "base_score": 0.9999813795089721
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:56:10.097859",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 1.0499792780194963,
+      "snapshot": "versions/snapshot_20260526_175610_093361",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499792780194963,
+        "base_score": 0.9999792780194964
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499792780194963,
+      "base_score": 0.9999792780194964
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:51.535259",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 0.9999876379966736,
+      "snapshot": "versions/snapshot_20260526_175751_532077",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999876379966736,
+        "base_score": 0.9999876379966736
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999876379966736,
+      "base_score": 0.9999876379966736
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:51.539745",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 1.049988661872016,
+      "snapshot": "versions/snapshot_20260526_175751_536831",
+      "evaluation": {
+        "success": true,
+        "score": 1.049988661872016,
+        "base_score": 0.9999886618720161
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049988661872016,
+      "base_score": 0.9999886618720161
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:51.544554",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 0.9499884819984435,
+      "snapshot": "versions/snapshot_20260526_175751_541290",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499884819984435,
+        "base_score": 0.9999884819984436
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499884819984435,
+      "base_score": 0.9999884819984436
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:51.549192",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply planner mutation: reduce max_steps to 3",
+      "modification_success": true,
+      "benchmark_score": 1.0499889698895541,
+      "snapshot": "versions/snapshot_20260526_175751_545980",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499889698895541,
+        "base_score": 0.9999889698895541
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499889698895541,
+      "base_score": 0.9999889698895541
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:51.554347",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply planner mutation: reduce max_steps to 3",
+      "modification_success": true,
+      "benchmark_score": 0.9499864657719931,
+      "snapshot": "versions/snapshot_20260526_175751_550684",
+      "evaluation": {
+        "success": true,
+        "score": 1.049986465771993,
+        "base_score": 0.999986465771993
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049986465771993,
+      "base_score": 0.999986465771993
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:54.096920",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 0.9999878681623019,
+      "snapshot": "versions/snapshot_20260526_175754_093155",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999878681623019,
+        "base_score": 0.9999878681623019
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999878681623019,
+      "base_score": 0.9999878681623019
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:54.103857",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 1.049983629158565,
+      "snapshot": "versions/snapshot_20260526_175754_099501",
+      "evaluation": {
+        "success": true,
+        "score": 1.049983629158565,
+        "base_score": 0.999983629158565
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049983629158565,
+      "base_score": 0.999983629158565
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:54.112336",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 1.0499820709228516,
+      "snapshot": "versions/snapshot_20260526_175754_106567",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499820709228516,
+        "base_score": 0.9999820709228515
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499820709228516,
+      "base_score": 0.9999820709228515
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:54.122554",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 0.9499811813235283,
+      "snapshot": "versions/snapshot_20260526_175754_115938",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499811813235282,
+        "base_score": 0.9999811813235283
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499811813235282,
+      "base_score": 0.9999811813235283
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:54.132759",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 0.949980873220107,
+      "snapshot": "versions/snapshot_20260526_175754_125617",
+      "evaluation": {
+        "success": true,
+        "score": 1.049980873220107,
+        "base_score": 0.9999808732201071
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049980873220107,
+      "base_score": 0.9999808732201071
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:57.541151",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 0.9999876101811727,
+      "snapshot": "versions/snapshot_20260526_175757_535397",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999876101811727,
+        "base_score": 0.9999876101811727
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999876101811727,
+      "base_score": 0.9999876101811727
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:57.548692",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 1.0499867614946867,
+      "snapshot": "versions/snapshot_20260526_175757_543224",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499867614946867,
+        "base_score": 0.9999867614946867
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499867614946867,
+      "base_score": 0.9999867614946867
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:57.557588",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 1.0499875044822693,
+      "snapshot": "versions/snapshot_20260526_175757_551545",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499875044822693,
+        "base_score": 0.9999875044822693
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499875044822693,
+      "base_score": 0.9999875044822693
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:57.566659",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 0.9499848047892253,
+      "snapshot": "versions/snapshot_20260526_175757_559916",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499848047892253,
+        "base_score": 0.9999848047892252
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499848047892253,
+      "base_score": 0.9999848047892252
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:57.575630",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 1.0499868122014133,
+      "snapshot": "versions/snapshot_20260526_175757_569957",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499868122014133,
+        "base_score": 0.9999868122014133
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499868122014133,
+      "base_score": 0.9999868122014133
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:59.560285",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 0.9999836019847704,
+      "snapshot": "versions/snapshot_20260526_175759_553474",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999836019847704,
+        "base_score": 0.9999836019847704
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999836019847704,
+      "base_score": 0.9999836019847704
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:59.572579",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 0.9499819417794545,
+      "snapshot": "versions/snapshot_20260526_175759_564447",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499819417794545,
+        "base_score": 0.9999819417794545
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499819417794545,
+      "base_score": 0.9999819417794545
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:59.585839",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 1.0499809557077835,
+      "snapshot": "versions/snapshot_20260526_175759_576658",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499809557077835,
+        "base_score": 0.9999809557077836
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499809557077835,
+      "base_score": 0.9999809557077836
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:59.601256",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 0.9499799503999599,
+      "snapshot": "versions/snapshot_20260526_175759_591693",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499799503999598,
+        "base_score": 0.9999799503999598
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499799503999598,
+      "base_score": 0.9999799503999598
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:57:59.613548",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply planner mutation: increase max_steps to 10",
+      "modification_success": true,
+      "benchmark_score": 1.0499856894870974,
+      "snapshot": "versions/snapshot_20260526_175759_606438",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499856894870974,
+        "base_score": 0.9999856894870974
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499856894870974,
+      "base_score": 0.9999856894870974
+    }
   }
 ]

@@ -1,1 +1,247 @@
-[]
+[
+  {
+    "id": "gen_task_1",
+    "goal": "find prime numbers up to 48",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_2",
+    "goal": "reverse a string of length 18",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_3",
+    "goal": "calculate factorial of 179",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_4",
+    "goal": "calculate factorial of 135",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_5",
+    "goal": "check if 103 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_6",
+    "goal": "calculate factorial of 166",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_7",
+    "goal": "reverse a string of length 259",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_8",
+    "goal": "calculate factorial of 108",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_9",
+    "goal": "find prime numbers up to 378",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_10",
+    "goal": "sort a list of 389 random integers",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_11",
+    "goal": "find prime numbers up to 70",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_12",
+    "goal": "find prime numbers up to 15",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_13",
+    "goal": "check if 121 is a palindrome",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_14",
+    "goal": "check if 156 is a palindrome",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_15",
+    "goal": "reverse a string of length 139",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_16",
+    "goal": "calculate factorial of 240",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_17",
+    "goal": "reverse a string of length 120",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_18",
+    "goal": "calculate factorial of 334",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_19",
+    "goal": "check if 331 is a palindrome",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_20",
+    "goal": "sort a list of 267 random integers",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_21",
+    "goal": "sort a list of 12 random integers",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_22",
+    "goal": "calculate factorial of 31",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_23",
+    "goal": "sort a list of 147 random integers",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_24",
+    "goal": "sort a list of 106 random integers",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_25",
+    "goal": "check if 169 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_26",
+    "goal": "sort a list of 241 random integers",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_27",
+    "goal": "reverse a string of length 315",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_28",
+    "goal": "check if 212 is a palindrome",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_29",
+    "goal": "sort a list of 372 random integers",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_30",
+    "goal": "calculate factorial of 189",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_31",
+    "goal": "sort a list of 79 random integers",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_32",
+    "goal": "find prime numbers up to 27",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_33",
+    "goal": "reverse a string of length 171",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_34",
+    "goal": "find prime numbers up to 173",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_35",
+    "goal": "check if 244 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_36",
+    "goal": "check if 60 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_37",
+    "goal": "find prime numbers up to 388",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_38",
+    "goal": "check if 232 is a palindrome",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_39",
+    "goal": "reverse a string of length 276",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_40",
+    "goal": "sort a list of 156 random integers",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_41",
+    "goal": "calculate factorial of 41",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_42",
+    "goal": "calculate factorial of 28",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_43",
+    "goal": "sort a list of 94 random integers",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_44",
+    "goal": "reverse a string of length 89",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_45",
+    "goal": "check if 88 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_46",
+    "goal": "find prime numbers up to 40",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_47",
+    "goal": "check if 248 is a palindrome",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_48",
+    "goal": "find prime numbers up to 438",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_49",
+    "goal": "find prime numbers up to 101",
+    "difficulty": 5
+  }
+]

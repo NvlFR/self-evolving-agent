@@ -1,6 +1,6 @@
 {
-  "include_analysis": true,
-  "include_validation": false,
-  "max_steps": 5,
+  "include_analysis": false,
+  "include_validation": true,
+  "max_steps": 3,
   "planning_strategy": "sequential"
 }

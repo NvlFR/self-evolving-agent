@@ -8,6 +8,7 @@ from brain.adaptive_evaluator import AdaptiveEvaluator
 from brain.reflection import ReflectionEngine
 from runtime.safety_guard import SafetyGuard
 from memory.self_model_manager import SelfModelManager
+from tasks.task_generator import TaskGenerator
 
 class AutonomousLoop:
     def __init__(self):
@@ -21,12 +22,16 @@ class AutonomousLoop:
         self.reflection_engine = ReflectionEngine()
         self.safety_guard = SafetyGuard()
         self.self_model_manager = SelfModelManager()
+        self.task_generator = TaskGenerator()
 
     def evolve(self, iterations=3):
         evolution_history = []
 
         for iteration in range(iterations):
             print(f"\n=== Evolution Iteration {iteration + 1} ===")
+
+            # Generate new tasks for this iteration
+            self.task_generator.generate_tasks(count=2, difficulty=iteration + 1)
 
             # 1. Reflection (Analyze previous episodes)
             episodes = self.memory_manager.load_memories()
@@ -56,13 +61,21 @@ class AutonomousLoop:
             avg_runtime = sum(res["runtime"] for res in benchmark_results) / len(benchmark_results)
             
             evaluation = self.evaluator.evaluate_with_context(
-                success=avg_success > 0.5, # Simplified success criteria
+                success=avg_success > 0.7, 
                 runtime=avg_runtime,
-                errors=0 # Simplified
+                errors=0 
             )
             
             success_score = evaluation["score"]
-            print(f"Iteration score: {success_score:.2f}")
+            
+            # Selection Pressure: Penalize repeated mutations
+            mutation_count = sum(1 for step in evolution_history if step["mutation"] == mutation)
+            if mutation_count > 0:
+                penalty = 0.1 * mutation_count
+                print(f"Applying repetition penalty: -{penalty:.2f}")
+                success_score -= penalty
+
+            print(f"Iteration final score: {success_score:.2f}")
 
             evolution_step = {
                 "iteration": iteration + 1,
@@ -83,12 +96,12 @@ class AutonomousLoop:
             )
 
             # 8. Keep or Rollback
-            if success_score < 0.5: # Threshold for rollback
-                print("Performance degraded. Rolling back...")
+            if success_score < 0.6: 
+                print("Selection pressure: Generation rejected. Rolling back...")
                 self.rollback_manager.rollback(snapshot)
-                self.self_model_manager.update_weakness(f"Failed mutation: {mutation}")
+                self.self_model_manager.update_weakness(f"Rejected generation: {mutation}")
             else:
-                print("Evolution step accepted.")
-                self.self_model_manager.update_strength(f"Successful mutation: {mutation}")
+                print("Selection pressure: Generation accepted.")
+                self.self_model_manager.update_strength(f"Successful evolution: {mutation}")
 
         return evolution_history

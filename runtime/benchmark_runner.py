@@ -1,36 +1,39 @@
 import time
+import json
+from pathlib import Path
 from tasks.benchmark_tasks import BENCHMARK_TASKS
 from brain.planner import Planner
 from runtime.executor import Executor
 from brain.evaluator import Evaluator
 
 class BenchmarkRunner:
-    def __init__(self):
+    def __init__(self, generated_tasks_path="tasks/generated_tasks.json"):
         self.planner = Planner()
         self.executor = Executor()
         self.evaluator = Evaluator()
+        self.generated_tasks_path = Path(generated_tasks_path)
 
     def run(self):
+        all_tasks = BENCHMARK_TASKS.copy()
+
+        # Add generated tasks if they exist
+        if self.generated_tasks_path.exists():
+            try:
+                with open(self.generated_tasks_path, "r") as f:
+                    all_tasks.extend(json.load(f))
+            except:
+                pass
+
         results = []
 
-        for task in BENCHMARK_TASKS:
+        for task in all_tasks:
             start_time = time.time()
             
             # 1. Plan
             plan = self.planner.create_plan(task["goal"])
             
-            # 2. Execute (For now, we simulate execution of the plan's code generation)
-            # In a real scenario, an LLM would generate code based on the plan.
-            # For the benchmark, we'll assume the 'goal' itself might contain 
-            # or imply code that can be run, or we just simulate success/failure.
-            
-            # For demonstration, let's say we try to execute something related to the task
-            # If the goal is "Create a Python function...", we might eventually have a solver.
-            # For now, we'll simulate a result.
-            
-            # Simulated code for the task
+            # 2. Execute (Simulated)
             simulated_code = f"# Task: {task['id']}\nprint('Executing task: {task['goal']}')"
-            
             execution_result = self.executor.execute(simulated_code)
             
             end_time = time.time()
