@@ -1,5 +1,11 @@
 {
-  "strengths": [],
+  "strengths": [
+    "Successful mutation: Apply heuristics mutation: optimize for reliability",
+    "Successful mutation: Apply planner mutation: enable include_validation",
+    "Successful mutation: Apply heuristics mutation: optimize for speed",
+    "Successful mutation: Apply heuristics mutation: strict validation mode",
+    "Successful mutation: Apply planner mutation: disable include_analysis"
+  ],
   "weaknesses": [
     "limited planning",
     "no persistent strategy optimization"

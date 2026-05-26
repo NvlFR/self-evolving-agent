@@ -11,7 +11,7 @@ class VersionManager:
         self.versions_dir.mkdir(exist_ok=True)
 
     def create_snapshot(self):
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")
         snapshot_path = self.versions_dir / f"snapshot_{timestamp}"
 
         shutil.copytree(self.source_dir, snapshot_path)

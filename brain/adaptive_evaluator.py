@@ -1,40 +1,43 @@
-import json
-from pathlib import Path
+from brain.evaluator import Evaluator
 
+class AdaptiveEvaluator(Evaluator):
+    def __init__(self):
+        self.history = []
+        self.instability_penalty = 0.1
+        self.consistency_reward = 0.05
 
-class AdaptiveEvaluator:
-    def __init__(self, memory_path="memory/scoring_memory.json"):
-        self.memory_path = Path(memory_path)
+    def evaluate_with_context(self, success: bool, runtime: float, errors: int):
+        # Base evaluation
+        base_result = self.evaluate(success, runtime, errors)
+        score = base_result["score"]
 
-        if not self.memory_path.exists():
-            self.memory_path.write_text(
-                json.dumps({
-                    "evaluations": []
-                }, indent=2)
-            )
-
-    def evaluate(self, benchmark_score, mutation_success):
-        score = benchmark_score
-
-        if mutation_success:
-            score += 0.5
-        else:
-            score -= 0.5
+        # Contextual adjustments
+        if len(self.history) > 0:
+            previous_success = self.history[-1]["success"]
+            
+            # Penalize instability (success to failure)
+            if previous_success and not success:
+                score -= self.instability_penalty
+            
+            # Reward consistency (success to success)
+            if previous_success and success:
+                score += self.consistency_reward
 
         result = {
-            "benchmark_score": benchmark_score,
-            "mutation_success": mutation_success,
-            "adaptive_score": score
+            "success": success,
+            "score": max(0.0, score),
+            "base_score": base_result["score"]
         }
 
-        self._store(result)
-
+        self.history.append(result)
         return result
 
-    def _store(self, result):
-        data = json.loads(self.memory_path.read_text())
-        data["evaluations"].append(result)
-
-        self.memory_path.write_text(
-            json.dumps(data, indent=2)
-        )
+    def get_evolution_trend(self):
+        if not self.history:
+            return 0.0
+        
+        scores = [h["score"] for h in self.history]
+        if len(scores) < 2:
+            return 0.0
+            
+        return scores[-1] - scores[0]

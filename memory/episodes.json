@@ -1,0 +1,338 @@
+[
+  {
+    "timestamp": "2026-05-26T17:36:24.154982",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 0.9998632550239563,
+      "snapshot": "versions/snapshot_20260526_173624",
+      "evaluation": {
+        "success": true,
+        "score": 0.9998632550239563,
+        "base_score": 0.9998632550239563
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9998632550239563,
+      "base_score": 0.9998632550239563
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:36:39.398368",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 0.9999822735786438,
+      "snapshot": "versions/snapshot_20260526_173639_387304",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999822735786438,
+        "base_score": 0.9999822735786438
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999822735786438,
+      "base_score": 0.9999822735786438
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:36:39.410958",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.0499739408493043,
+      "snapshot": "versions/snapshot_20260526_173639_399106",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499739408493043,
+        "base_score": 0.9999739408493042
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499739408493043,
+      "base_score": 0.9999739408493042
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:36:39.433485",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 1.0499765992164611,
+      "snapshot": "versions/snapshot_20260526_173639_419032",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499765992164611,
+        "base_score": 0.9999765992164612
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499765992164611,
+      "base_score": 0.9999765992164612
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:36:39.447361",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply planner mutation: reduce max_steps to 3",
+      "modification_success": true,
+      "benchmark_score": 1.0499833941459655,
+      "snapshot": "versions/snapshot_20260526_173639_434864",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499833941459655,
+        "base_score": 0.9999833941459656
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499833941459655,
+      "base_score": 0.9999833941459656
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:36:39.467832",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.0499853491783142,
+      "snapshot": "versions/snapshot_20260526_173639_448400",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499853491783142,
+        "base_score": 0.9999853491783142
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499853491783142,
+      "base_score": 0.9999853491783142
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:37:19.497359",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 0.999989366531372,
+      "snapshot": "versions/snapshot_20260526_173719_493403",
+      "evaluation": {
+        "success": true,
+        "score": 0.999989366531372,
+        "base_score": 0.999989366531372
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.999989366531372,
+      "base_score": 0.999989366531372
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:37:19.508085",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 1.049984085559845,
+      "snapshot": "versions/snapshot_20260526_173719_498287",
+      "evaluation": {
+        "success": true,
+        "score": 1.049984085559845,
+        "base_score": 0.999984085559845
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049984085559845,
+      "base_score": 0.999984085559845
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:37:19.518959",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 1.049983060359955,
+      "snapshot": "versions/snapshot_20260526_173719_509271",
+      "evaluation": {
+        "success": true,
+        "score": 1.049983060359955,
+        "base_score": 0.9999830603599549
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049983060359955,
+      "base_score": 0.9999830603599549
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:37:19.529668",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.0499877333641052,
+      "snapshot": "versions/snapshot_20260526_173719_520455",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499877333641052,
+        "base_score": 0.9999877333641052
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499877333641052,
+      "base_score": 0.9999877333641052
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:37:19.542170",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.049678385257721,
+      "snapshot": "versions/snapshot_20260526_173719_531204",
+      "evaluation": {
+        "success": true,
+        "score": 1.049678385257721,
+        "base_score": 0.9996783852577209
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.049678385257721,
+      "base_score": 0.9996783852577209
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:38:34.011406",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 0.9999907970428467,
+      "snapshot": "versions/snapshot_20260526_173834_008433",
+      "evaluation": {
+        "success": true,
+        "score": 0.9999907970428467,
+        "base_score": 0.9999907970428467
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9999907970428467,
+      "base_score": 0.9999907970428467
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:38:34.014147",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.0499931812286376,
+      "snapshot": "versions/snapshot_20260526_173834_012223",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499931812286376,
+        "base_score": 0.9999931812286377
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499931812286376,
+      "base_score": 0.9999931812286377
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:38:34.017163",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply planner mutation: enable include_validation",
+      "modification_success": true,
+      "benchmark_score": 1.0499931454658509,
+      "snapshot": "versions/snapshot_20260526_173834_015121",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499931454658509,
+        "base_score": 0.9999931454658508
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499931454658509,
+      "base_score": 0.9999931454658508
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:38:34.019970",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 1.0499938249588012,
+      "snapshot": "versions/snapshot_20260526_173834_018031",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499938249588012,
+        "base_score": 0.9999938249588013
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499938249588012,
+      "base_score": 0.9999938249588013
+    }
+  },
+  {
+    "timestamp": "2026-05-26T17:38:34.022879",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 1.0499919652938843,
+      "snapshot": "versions/snapshot_20260526_173834_020931",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499919652938843,
+        "base_score": 0.9999919652938842
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499919652938843,
+      "base_score": 0.9999919652938842
+    }
+  }
+]
