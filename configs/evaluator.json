@@ -1,0 +1,6 @@
+{
+  "success_weight": 1.0,
+  "runtime_penalty": 0.2,
+  "error_penalty": 0.5,
+  "stability_bonus": 0.05
+}
