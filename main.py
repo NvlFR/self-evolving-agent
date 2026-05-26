@@ -1,59 +1,23 @@
-from brain.planner import Planner
-from brain.evaluator import Evaluator
-from brain.reflection import ReflectionEngine
-from brain.modifier import Modifier
-from brain.self_editor import SelfEditor
-from runtime.executor import Executor
-from runtime.version_manager import VersionManager
-from memory.memory_manager import MemoryManager
+from runtime.autonomous_loop import AutonomousLoop
+from brain.meta_reasoner import MetaReasoner
 
-planner = Planner()
-executor = Executor()
-evaluator = Evaluator()
-reflection = ReflectionEngine()
-modifier = Modifier()
-self_editor = SelfEditor()
-version_manager = VersionManager()
-memory_manager = MemoryManager()
+print("\n=== SEED EVOLUTION SYSTEM START ===\n")
 
-GOAL = "print('hello world')"
+loop = AutonomousLoop()
+meta_reasoner = MetaReasoner()
 
-print("\n=== SEED AGENT START ===\n")
+history = loop.evolve(iterations=5)
 
-snapshot = version_manager.create_snapshot()
-print(f"Snapshot created: {snapshot}")
+print("\n=== EVOLUTION HISTORY ===\n")
 
-plan = planner.create_plan(GOAL)
-print(f"Plan: {plan}")
+for step in history:
+    print(step)
 
-result = executor.execute(GOAL)
-print(f"Execution result: {result}")
+print("\n=== META REASONING ===\n")
 
-evaluation = evaluator.evaluate(
-    success=result["success"],
-    runtime=0.1,
-    errors=0 if result["success"] else 1
-)
+insights = meta_reasoner.analyze_evolution(history)
 
-print(f"Evaluation: {evaluation}")
+for insight in insights:
+    print(f"- {insight}")
 
-reflection_result = reflection.reflect(result)
-print(f"Reflection: {reflection_result}")
-
-proposed_change = modifier.propose_change(reflection_result)
-print(f"Proposed change: {proposed_change}")
-
-memory_manager.store_episode(
-    task=GOAL,
-    result=result,
-    evaluation=evaluation
-)
-
-if proposed_change:
-    success = self_editor.apply_change(
-        proposed_change["change"]
-    )
-
-    print(f"Self modification applied: {success}")
-
-print("\n=== SEED AGENT END ===\n")
+print("\n=== SEED EVOLUTION SYSTEM END ===\n")
