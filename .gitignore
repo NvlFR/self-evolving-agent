@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+build/
+dist/
+
+# Virtual Environment
+venv/
+.env/
+.venv/
+
+# SQLite
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime Artifacts
+versions/
+checkpoints/
+
+# Environment Variables
+.env
