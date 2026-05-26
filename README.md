@@ -1,73 +1,84 @@
 # Self-Evolving-Agent
 
-SEED is a minimal self-improving AI agent experiment.
+> A minimal recursive self-improving AI agent experiment.
 
-The purpose of this project is not to create AGI.
-The purpose is to explore whether an autonomous system can:
+SEED is an experiment focused on one question:
 
-- understand its own structure
-- evaluate its own failures
-- modify parts of itself
-- improve across iterations
-- survive without continuous human intervention
+```text
+Can a small autonomous system understand itself,
+modify itself,
+and improve itself over time?
+```
 
----
+This project is NOT:
+- a chatbot
+- an AGI simulator
+- an automation framework
+- a startup generator
 
-# Vision
-
-Create a small autonomous agent capable of recursive self-improvement.
-
-The system should:
-- execute tasks
-- evaluate outcomes
-- reflect on failures
-- update limited parts of itself
-- evolve gradually from a minimal foundation
-
-Humans only create the initial seed.
-The agent expands itself.
+This is a research-style experiment in:
+- self-reflection
+- recursive self-improvement
+- autonomous system evolution
+- self-modifying architectures
 
 ---
 
-# Core Philosophy
+# Core Idea
 
-Start extremely small.
+Most AI agents can:
 
-Do not build a giant framework.
-Do not over-engineer.
-Do not simulate AGI.
+```text
+input → output
+```
 
-The experiment focuses on:
+SEED attempts to go further:
 
 ```text
 observe
 → evaluate
+→ reflect
 → modify
 → test
-→ compare
-→ keep/discard
+→ evolve
 ```
 
-The feedback loop is more important than intelligence.
+The system should eventually be capable of:
+- understanding its own weaknesses
+- proposing internal improvements
+- modifying limited parts of itself
+- benchmarking new versions
+- surviving multiple generations
+
+Humans only create the initial seed.
+The agent grows from there.
 
 ---
 
-# V1 Goals
+# Current Status
 
-The first version should only be able to:
+## Implemented
 
-1. execute simple coding tasks
-2. evaluate success/failure
-3. store memory
-4. inspect its own source code
-5. modify small internal components
-6. retry using updated strategies
+- planner
+- executor
+- evaluator
+- reflection engine
+- modifier engine
+- self model memory
+- initial runtime loop
 
-If this works reliably, the experiment is already successful.
+## Not Yet Implemented
+
+- rollback snapshots
+- persistent episodic memory
+- mutation engine
+- benchmark environment
+- autonomous tool generation
+- architecture redesign
 
 ---
 
-# Initial Architecture
+# System Architecture
 
 ```text
 USER GOAL
@@ -112,46 +123,114 @@ self-evolving-agent/
 │
 ├── tasks/
 │
+├── PRD.md
+│
 └── main.py
 ```
 
 ---
 
-# Safety Rules
+# Self Model Example
 
-The agent must NOT:
+The agent maintains a simple internal representation of itself.
 
-- access payment systems
-- freely access the internet
-- modify evaluator integrity
-- disable rollback systems
-- remove logging systems
+Example:
 
-All experiments should run inside a sandboxed environment.
+```json
+{
+  "strengths": ["fast execution"],
+  "weaknesses": ["limited planning"],
+  "active_goals": ["improve task success rate"]
+}
+```
+
+This is not consciousness.
+This is computational self-representation.
 
 ---
 
-# Long-Term Evolution Path
+# Why This Project Exists
 
-## V1
-Self reflection
+Most autonomous agents fail because they:
+- cannot understand why they fail
+- cannot adapt internal architecture
+- cannot preserve long-term improvements
+- cannot survive recursive modification
 
-## V2
-Self code modification
+SEED explores whether a minimal architecture can slowly evolve beyond its original design.
 
-## V3
-Tool generation
+---
 
-## V4
-Architecture redesign
+# Safety Philosophy
 
-## V5
-Evolutionary multi-agent ecosystem
+The system is intentionally constrained.
+
+The agent must NOT:
+- access payment systems
+- freely access the internet
+- disable logging
+- modify evaluator integrity
+- disable rollback systems
+
+All experiments should run in a sandbox.
+
+---
+
+# Roadmap
+
+## V1 — Reflection
+- task execution
+- evaluation
+- self-analysis
+
+## V2 — Self Modification
+- prompt modification
+- heuristic modification
+- retry optimization
+
+## V3 — Tool Creation
+- generate utilities
+- create helper modules
+- internal tooling
+
+## V4 — Architecture Evolution
+- planner redesign
+- memory redesign
+- autonomous optimization
+
+## V5 — Evolutionary Systems
+- multiple competing agents
+- mutation strategies
+- survival selection
 
 ---
 
 # Key Insight
 
-This project is not about building a chatbot.
+Intelligence is not enough.
 
-This is an experiment about whether a system can recursively improve itself from a tiny initial seed.
+The real challenge is:
+
+```text
+stability under recursive self-modification
+```
+
+That is the true purpose of this experiment.
+
+---
+
+# Inspiration
+
+Inspired by concepts from:
+- recursive self-improvement
+- reflective agents
+- AutoGPT-style systems
+- evolutionary computation
+- cognitive architectures
+- self-healing software systems
+
+---
+
+# License
+
+MIT
