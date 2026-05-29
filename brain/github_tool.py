@@ -36,21 +36,44 @@ class GitHubTool:
 
     def commit_and_push(self, message):
         try:
+            # Generate a unique branch name for this evolution
+            import time
+            branch_name = f"evolution-{int(time.time())}"
+            
+            # Create and switch to new branch
+            subprocess.run(["git", "checkout", "-b", branch_name], check=True)
+            
             # Stage changes
             subprocess.run(["git", "add", "."], check=True)
             
             # Commit
             subprocess.run(["git", "commit", "-m", message], check=True)
             
-            # Push
-            subprocess.run(["git", "push"], check=True)
+            # Push new branch
+            subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
             
-            print(f"GitHub Updated: {message}")
+            # Create Pull Request
+            pr_result = subprocess.run(
+                ["gh", "pr", "create", "--title", message, "--body", f"Autonomous improvement from SEED System.\n\nDetails: {message}", "--base", "main"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            
+            print(f"GitHub PR Created: {pr_result.stdout.strip()}")
+            
+            # Switch back to main for the next cycle
+            subprocess.run(["git", "checkout", "main"], check=True)
+            
             return True
         except Exception as e:
             if "nothing to commit" in str(e).lower():
+                # If nothing to commit, just stay on main
+                subprocess.run(["git", "checkout", "main"], capture_output=True)
                 return True
-            print(f"Error during git update: {e}")
+            print(f"Error during git PR creation: {e}")
+            # Ensure we are back on main even on error
+            subprocess.run(["git", "checkout", "main"], capture_output=True)
             return False
 
     def list_issues(self):
