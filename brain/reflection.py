@@ -1,47 +1,52 @@
 import json
+from brain.llm_client import llm
 
 class ReflectionEngine:
     def __init__(self):
         self.reflection_history = []
 
     def reflect_on_episodes(self, episodes: list):
-        failures = [e for e in episodes if not e["evaluation"].get("success")]
-        
-        if not failures:
+        if not episodes:
             return {
-                "insights": "No failures detected in recent episodes. System stable.",
+                "insights": "No episode data available for reflection.",
                 "hypotheses": []
             }
 
-        # Simple pattern matching for errors
-        error_counts = {}
-        for f in failures:
-            err = f["result"].get("error", "unknown")
-            # Extract first line of error or first 50 chars
-            err_summary = str(err).split('\n')[0][:50]
-            error_counts[err_summary] = error_counts.get(err_summary, 0) + 1
+        # Prepare a summary of recent episodes for the LLM
+        summary = []
+        for e in episodes[-5:]: # Look at last 5 episodes
+            summary.append({
+                "task": e.get("task"),
+                "success": e["evaluation"].get("success"),
+                "score": e["evaluation"].get("score"),
+                "mutation": e["result"].get("mutation")
+            })
 
-        top_error = max(error_counts, key=error_counts.get)
+        prompt = f"""
+        You are the SEED Evolution System's Reflection Engine.
+        Analyze the following recent execution episodes and provide insights:
+        {json.dumps(summary, indent=2)}
+
+        Identify patterns of failure or success. 
+        Propose hypotheses for how the agent can improve its architecture or tools.
+        Return the response as a JSON object with 'insights' (string) and 'hypotheses' (list of strings).
+        """
         
-        insight = f"Detected repeated failure: '{top_error}' ({error_counts[top_error]} times)."
+        messages = [{"role": "user", "content": prompt}]
+        response = llm.completion(messages)
         
-        hypotheses = [
-            f"Fixing '{top_error}' will improve overall success rate.",
-            "Adjusting planner heuristics might reduce this type of error."
-        ]
-        
-        reflection = {
-            "insights": insight,
-            "hypotheses": hypotheses,
-            "failure_count": len(failures)
-        }
-        
-        self.reflection_history.append(reflection)
-        return reflection
+        try:
+            json_str = llm.extract_json(response)
+            reflection = json.loads(json_str)
+            self.reflection_history.append(reflection)
+            return reflection
+        except Exception as e:
+            print(f"Error parsing reflection: {e}")
+            return {
+                "insights": "Error during LLM reflection. Proceeding with caution.",
+                "hypotheses": ["Investigate LLM connectivity", "Simplify reflection prompt"]
+            }
 
     def get_proposed_mutation_areas(self):
-        if not self.reflection_history:
-            return ["planner", "retry_logic"]
-            
-        # Logic to decide what to mutate based on reflections
-        return ["planner", "heuristics"]
+        # This could also be LLM driven, but for now we can derive it from hypotheses
+        return ["core_logic", "new_tools", "planner_refinement"]

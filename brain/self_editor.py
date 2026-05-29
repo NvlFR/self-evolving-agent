@@ -1,46 +1,49 @@
 import json
+import os
 from pathlib import Path
 
 class SelfEditor:
     def __init__(self):
-        self.planner_config = Path("configs/planner.json")
-        self.target_file = Path("brain/planner.py")
+        pass
 
-    def apply_change(self, mutation: str):
-        # Check if it's a planner mutation
-        if "planner mutation" in mutation.lower():
-            return self._apply_planner_mutation(mutation)
-        
-        # Fallback to legacy source modification
-        if not self.target_file.exists():
+    def apply_change(self, mutation: dict):
+        if not mutation or not isinstance(mutation, dict):
             return False
-        content = self.target_file.read_text()
-        content += f"\n# Self modification note: {mutation}\n"
-        self.target_file.write_text(content)
-        return True
-
-    def _apply_planner_mutation(self, mutation: str):
-        if not self.planner_config.exists():
-            # Create default if missing
-            default = {"include_analysis": True, "include_validation": True, "max_steps": 5}
-            self.planner_config.write_text(json.dumps(default, indent=2))
+            
+        m_type = mutation.get("type")
+        file_path = mutation.get("file_path")
+        code = mutation.get("code")
+        
+        if not file_path or not code:
+            return False
+            
+        path = Path(file_path)
+        
+        # Safety check: only allow modifications within the project, 
+        # specifically brain/ or runtime/ or memory/ or tasks/
+        allowed_dirs = ["brain", "runtime", "memory", "tasks"]
+        is_safe = any(str(path).startswith(d) for d in allowed_dirs)
+        
+        if not is_safe:
+            print(f"Safety violation: Attempted to modify {file_path}")
+            return False
 
         try:
-            with open(self.planner_config, "r+") as f:
-                config = json.load(f)
+            if m_type == "create_tool":
+                # Create parent directories if they don't exist
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(code)
+                print(f"Created new tool: {file_path}")
+                return True
                 
-                if "enable include_validation" in mutation:
-                    config["include_validation"] = True
-                elif "disable include_analysis" in mutation:
-                    config["include_analysis"] = False
-                elif "increase max_steps" in mutation:
-                    config["max_steps"] = min(20, config.get("max_steps", 5) + 2)
-                elif "reduce max_steps" in mutation:
-                    config["max_steps"] = max(1, config.get("max_steps", 5) - 2)
+            elif m_type == "modify_file":
+                # For now, we overwrite the file for simplicity in this prototype.
+                # In a more advanced version, we'd use surgical replacement.
+                path.write_text(code)
+                print(f"Modified file: {file_path}")
+                return True
                 
-                f.seek(0)
-                json.dump(config, f, indent=2)
-                f.truncate()
-            return True
-        except:
+            return False
+        except Exception as e:
+            print(f"Error applying change to {file_path}: {e}")
             return False

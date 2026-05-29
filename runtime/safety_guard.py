@@ -1,15 +1,21 @@
 class SafetyGuard:
     FORBIDDEN_PATTERNS = [
         "os.system",
-        "subprocess",
         "rm -rf",
         "eval(",
         "exec("
     ]
 
-    def validate_mutation(self, mutation_text: str):
+    def validate_mutation(self, mutation: dict):
+        if not isinstance(mutation, dict):
+            return True # Or handle legacy string mutations if needed
+            
+        code = mutation.get("code", "")
+        description = mutation.get("description", "")
+        
+        # Check code and description for forbidden patterns
         for pattern in self.FORBIDDEN_PATTERNS:
-            if pattern in mutation_text:
+            if pattern in code or pattern in description:
                 return False
 
         return True

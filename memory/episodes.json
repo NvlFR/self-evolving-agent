@@ -859,5 +859,215 @@
       "score": 1.0499856894870974,
       "base_score": 0.9999856894870974
     }
+  },
+  {
+    "timestamp": "2026-05-29T15:19:52.833515",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 0.9998726836117832,
+      "snapshot": "versions/snapshot_20260529_151952_750319",
+      "evaluation": {
+        "success": true,
+        "score": 0.9998726836117832,
+        "base_score": 0.9998726836117832
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9998726836117832,
+      "base_score": 0.9998726836117832
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:19:52.920783",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": "Apply heuristics mutation: strict validation mode",
+      "modification_success": true,
+      "benchmark_score": 1.0498866566440515,
+      "snapshot": "versions/snapshot_20260529_151952_862387",
+      "evaluation": {
+        "success": true,
+        "score": 1.0498866566440515,
+        "base_score": 0.9998866566440515
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0498866566440515,
+      "base_score": 0.9998866566440515
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:19:52.983290",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": "Apply heuristics mutation: optimize for speed",
+      "modification_success": true,
+      "benchmark_score": 0.9499089483487405,
+      "snapshot": "versions/snapshot_20260529_151952_935834",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499089483487405,
+        "base_score": 0.9999089483487404
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499089483487405,
+      "base_score": 0.9999089483487404
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:19:53.069958",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": "Apply heuristics mutation: optimize for reliability",
+      "modification_success": true,
+      "benchmark_score": 1.0499144554138184,
+      "snapshot": "versions/snapshot_20260529_151953_021352",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499144554138184,
+        "base_score": 0.9999144554138184
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499144554138184,
+      "base_score": 0.9999144554138184
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:19:53.130422",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": "Apply planner mutation: disable include_analysis",
+      "modification_success": true,
+      "benchmark_score": 1.0499201328035386,
+      "snapshot": "versions/snapshot_20260529_151953_091180",
+      "evaluation": {
+        "success": true,
+        "score": 1.0499201328035386,
+        "base_score": 0.9999201328035385
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0499201328035386,
+      "base_score": 0.9999201328035385
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:25:48.433604",
+    "task": "evolution_iteration_1",
+    "result": {
+      "iteration": 1,
+      "mutation": null,
+      "modification_success": false,
+      "benchmark_score": 0.9891000573597257,
+      "snapshot": "versions/snapshot_20260529_152544_993072",
+      "evaluation": {
+        "success": true,
+        "score": 0.9891000573597257,
+        "base_score": 0.9891000573597257
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 0.9891000573597257,
+      "base_score": 0.9891000573597257
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:25:52.930953",
+    "task": "evolution_iteration_2",
+    "result": {
+      "iteration": 2,
+      "mutation": null,
+      "modification_success": false,
+      "benchmark_score": 0.9359272691938613,
+      "snapshot": "versions/snapshot_20260529_152548_492137",
+      "evaluation": {
+        "success": true,
+        "score": 1.0359272691938612,
+        "base_score": 0.9859272691938612
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0359272691938612,
+      "base_score": 0.9859272691938612
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:25:59.096714",
+    "task": "evolution_iteration_3",
+    "result": {
+      "iteration": 3,
+      "mutation": null,
+      "modification_success": false,
+      "benchmark_score": 0.8307785230969627,
+      "snapshot": "versions/snapshot_20260529_152553_033382",
+      "evaluation": {
+        "success": true,
+        "score": 1.0307785230969626,
+        "base_score": 0.9807785230969626
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0307785230969626,
+      "base_score": 0.9807785230969626
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:26:08.636553",
+    "task": "evolution_iteration_4",
+    "result": {
+      "iteration": 4,
+      "mutation": null,
+      "modification_success": false,
+      "benchmark_score": 0.7202314982338556,
+      "snapshot": "versions/snapshot_20260529_152559_246639",
+      "evaluation": {
+        "success": true,
+        "score": 1.0202314982338556,
+        "base_score": 0.9702314982338557
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0202314982338556,
+      "base_score": 0.9702314982338557
+    }
+  },
+  {
+    "timestamp": "2026-05-29T15:26:21.395065",
+    "task": "evolution_iteration_5",
+    "result": {
+      "iteration": 5,
+      "mutation": null,
+      "modification_success": false,
+      "benchmark_score": 0.6183678309122721,
+      "snapshot": "versions/snapshot_20260529_152611_378685",
+      "evaluation": {
+        "success": true,
+        "score": 1.0183678309122721,
+        "base_score": 0.9683678309122722
+      }
+    },
+    "evaluation": {
+      "success": true,
+      "score": 1.0183678309122721,
+      "base_score": 0.9683678309122722
+    }
   }
 ]

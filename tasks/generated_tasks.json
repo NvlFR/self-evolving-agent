@@ -243,5 +243,55 @@
     "id": "gen_task_49",
     "goal": "find prime numbers up to 101",
     "difficulty": 5
+  },
+  {
+    "id": "gen_task_50",
+    "goal": "check if 99 is a palindrome",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_51",
+    "goal": "calculate factorial of 39",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_52",
+    "goal": "sort a list of 46 random integers",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_53",
+    "goal": "calculate factorial of 92",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_54",
+    "goal": "check if 214 is a palindrome",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_55",
+    "goal": "reverse a string of length 261",
+    "difficulty": 3
+  },
+  {
+    "id": "gen_task_56",
+    "goal": "find prime numbers up to 115",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_57",
+    "goal": "check if 249 is a palindrome",
+    "difficulty": 4
+  },
+  {
+    "id": "gen_task_58",
+    "goal": "calculate factorial of 54",
+    "difficulty": 5
+  },
+  {
+    "id": "gen_task_59",
+    "goal": "find prime numbers up to 431",
+    "difficulty": 5
   }
 ]

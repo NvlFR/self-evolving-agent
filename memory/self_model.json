@@ -11,7 +11,8 @@
     "Successful evolution: Apply heuristics mutation: strict validation mode",
     "Successful evolution: Apply planner mutation: disable include_analysis",
     "Successful evolution: Apply heuristics mutation: optimize for speed",
-    "Successful evolution: Apply heuristics mutation: optimize for reliability"
+    "Successful evolution: Apply heuristics mutation: optimize for reliability",
+    "Successful evolution: None"
   ],
   "weaknesses": [
     "limited planning",

@@ -1,0 +1,449 @@
+{
+  "name": "SEED \u2014 Self-Evolving Agent Pipeline",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "node-start",
+      "name": "START",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        80,
+        400
+      ],
+      "notes": "Trigger evolution loop manually"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Load Episodic Memory\nreturn [{\n  json: {\n    stage: \"Load Episodic Memory\",\n    description: \"Reads episodes.json \u2014 full history of past iterations\",\n    file: \"memory/episodes.json\",\n    module: \"memory/memory_manager.py\"\n  }\n}];"
+      },
+      "id": "node-memory",
+      "name": "Load Episodic Memory",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reflection Engine\nreturn [{\n  json: {\n    stage: \"Reflection Engine\",\n    description: \"Analyzes past episodes to extract behavioral insights and failure patterns\",\n    module: \"brain/reflection.py\",\n    output: \"insights[]\"\n  }\n}];"
+      },
+      "id": "node-reflection",
+      "name": "Reflection Engine",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mutation Engine\nreturn [{\n  json: {\n    stage: \"Mutation Engine\",\n    description: \"Generates targeted mutation proposal based on reflection insights\",\n    module: \"brain/mutation_engine.py\",\n    output: \"mutation_proposal\"\n  }\n}];"
+      },
+      "id": "node-mutation",
+      "name": "Mutation Engine",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Safety Guard\nconst mutation = $input.first().json.output;\nconst blocked = false; // simulate\n\nreturn [{\n  json: {\n    stage: \"Safety Guard\",\n    description: \"Validates mutation \u2014 blocks unsafe patterns before touching filesystem\",\n    module: \"runtime/safety_guard.py\",\n    mutation_safe: !blocked,\n    action: blocked ? \"BLOCKED \u2192 Skip Iteration\" : \"PASS \u2192 Continue\"\n  }\n}];"
+      },
+      "id": "node-safety",
+      "name": "Safety Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        940,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-safe",
+              "leftValue": "={{ $json.mutation_safe }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-safe",
+      "name": "Mutation Safe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Blocked path\nreturn [{\n  json: {\n    stage: \"BLOCKED\",\n    description: \"Mutation rejected by Safety Guard. Iteration skipped.\",\n    result: \"skip\"\n  }\n}];"
+      },
+      "id": "node-blocked",
+      "name": "Skip Iteration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Version Manager \u2014 Create Snapshot\nconst ts = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0,15);\nreturn [{\n  json: {\n    stage: \"Version Manager\",\n    description: \"Creates timestamped snapshot of brain/ before applying mutation\",\n    module: \"runtime/version_manager.py\",\n    snapshot: `versions/snapshot_${ts}/`\n  }\n}];"
+      },
+      "id": "node-snapshot",
+      "name": "Create Snapshot",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Self-Editor \u2014 Apply Mutation\nreturn [{\n  json: {\n    stage: \"Self-Editor\",\n    description: \"Applies mutation to brain/planner.py or configs/planner.json\",\n    module: \"brain/self_editor.py\",\n    targets: [\"brain/planner.py\", \"configs/planner.json\"]\n  }\n}];"
+      },
+      "id": "node-editor",
+      "name": "Self-Editor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Benchmark Runner\nreturn [{\n  json: {\n    stage: \"Benchmark Runner\",\n    description: \"Executes standardized benchmark tasks and collects results\",\n    module: \"runtime/benchmark_runner.py\",\n    tasks_source: \"tasks/benchmark_tasks.py\"\n  }\n}];"
+      },
+      "id": "node-benchmark",
+      "name": "Benchmark Runner",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Adaptive Evaluator\nconst score = Math.random() * 0.5 + 0.5; // simulate 0.5\u20131.0\nreturn [{\n  json: {\n    stage: \"Adaptive Evaluator\",\n    description: \"Scores iteration with context-aware metrics + repetition penalty\",\n    module: \"brain/adaptive_evaluator.py\",\n    score: parseFloat(score.toFixed(2)),\n    threshold: 0.6,\n    accepted: score >= 0.6\n  }\n}];"
+      },
+      "id": "node-evaluator",
+      "name": "Adaptive Evaluator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2040,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-score",
+              "leftValue": "={{ $json.accepted }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if-score",
+      "name": "Score \u2265 0.6?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Accept Generation\nreturn [{\n  json: {\n    stage: \"Accept Generation\",\n    description: \"Score passed threshold. Mutation kept. Self-model updated with new strength.\",\n    module: \"memory/self_model_manager.py\",\n    action: \"update_strength\",\n    result: \"ACCEPTED \u2713\"\n  }\n}];"
+      },
+      "id": "node-accept",
+      "name": "Accept Generation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reject + Rollback\nreturn [{\n  json: {\n    stage: \"Reject + Rollback\",\n    description: \"Score below threshold. Rollback to last snapshot. Self-model updated with weakness.\",\n    module: \"runtime/rollback_manager.py\",\n    action: \"rollback + update_weakness\",\n    result: \"REJECTED \u2717 \u2192 ROLLED BACK\"\n  }\n}];"
+      },
+      "id": "node-reject",
+      "name": "Reject + Rollback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Memory Manager \u2014 Store Episode\nreturn [{\n  json: {\n    stage: \"Memory Manager\",\n    description: \"Stores full episode (mutation, score, snapshot ref, evaluation) to episodes.json\",\n    module: \"memory/memory_manager.py\",\n    output: \"memory/episodes.json\"\n  }\n}];"
+      },
+      "id": "node-store",
+      "name": "Store Episode",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2700,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Meta Reasoner\nreturn [{\n  json: {\n    stage: \"Meta Reasoner\",\n    description: \"Cross-iteration analysis of full evolution history. Surfaces patterns and hypotheses.\",\n    module: \"brain/meta_reasoner.py\",\n    output: \"insights[], hypotheses[]\"\n  }\n}];"
+      },
+      "id": "node-meta",
+      "name": "Meta Reasoner",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2920,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Evolution Complete\nreturn [{\n  json: {\n    stage: \"END\",\n    description: \"One evolution iteration complete. Loop continues for N iterations.\",\n    next: \"Next Iteration or END\"\n  }\n}];"
+      },
+      "id": "node-end",
+      "name": "END",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3140,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "START": {
+      "main": [
+        [
+          {
+            "node": "Load Episodic Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Episodic Memory": {
+      "main": [
+        [
+          {
+            "node": "Reflection Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reflection Engine": {
+      "main": [
+        [
+          {
+            "node": "Mutation Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mutation Engine": {
+      "main": [
+        [
+          {
+            "node": "Safety Guard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safety Guard": {
+      "main": [
+        [
+          {
+            "node": "Mutation Safe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mutation Safe?": {
+      "main": [
+        [
+          {
+            "node": "Create Snapshot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Iteration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Snapshot": {
+      "main": [
+        [
+          {
+            "node": "Self-Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Self-Editor": {
+      "main": [
+        [
+          {
+            "node": "Benchmark Runner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Benchmark Runner": {
+      "main": [
+        [
+          {
+            "node": "Adaptive Evaluator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adaptive Evaluator": {
+      "main": [
+        [
+          {
+            "node": "Score \u2265 0.6?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score \u2265 0.6?": {
+      "main": [
+        [
+          {
+            "node": "Accept Generation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reject + Rollback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accept Generation": {
+      "main": [
+        [
+          {
+            "node": "Store Episode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reject + Rollback": {
+      "main": [
+        [
+          {
+            "node": "Store Episode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Episode": {
+      "main": [
+        [
+          {
+            "node": "Meta Reasoner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Reasoner": {
+      "main": [
+        [
+          {
+            "node": "END",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null
+}

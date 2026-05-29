@@ -9,6 +9,7 @@ from brain.reflection import ReflectionEngine
 from runtime.safety_guard import SafetyGuard
 from memory.self_model_manager import SelfModelManager
 from tasks.task_generator import TaskGenerator
+from brain.github_tool import github_tool
 
 class AutonomousLoop:
     def __init__(self):
@@ -41,10 +42,21 @@ class AutonomousLoop:
             # 2. Mutation Generation
             mutation = self.mutation_engine.generate_mutation(reflection)
             print(f"Proposed mutation: {mutation}")
+            
+            if not mutation:
+                github_tool.create_issue(
+                    f"Evolution Failed - Iteration {iteration + 1}",
+                    f"Mutation Engine failed to generate a proposal.\nReflection: {reflection['insights']}"
+                )
+                continue
 
             # 3. Safety Check
             if not self.safety_guard.validate_mutation(mutation):
                 print("Mutation blocked by safety guard!")
+                github_tool.create_issue(
+                    f"Safety Violation - Iteration {iteration + 1}",
+                    f"Mutation blocked: {mutation.get('description', 'No description')}"
+                )
                 continue
 
             # 4. Snapshot
@@ -100,8 +112,13 @@ class AutonomousLoop:
                 print("Selection pressure: Generation rejected. Rolling back...")
                 self.rollback_manager.rollback(snapshot)
                 self.self_model_manager.update_weakness(f"Rejected generation: {mutation}")
+                github_tool.create_issue(
+                    f"Evolution Rollback - Iteration {iteration + 1}",
+                    f"Score: {success_score:.2f}. Mutation rejected and rolled back.\nMutation: {mutation.get('description')}"
+                )
             else:
                 print("Selection pressure: Generation accepted.")
                 self.self_model_manager.update_strength(f"Successful evolution: {mutation}")
+                github_tool.commit_and_push(f"Evolution Iteration {iteration + 1}: {mutation.get('description', 'Self-improvement')}")
 
         return evolution_history
