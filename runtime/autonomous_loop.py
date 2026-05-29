@@ -10,6 +10,7 @@ from runtime.safety_guard import SafetyGuard
 from memory.self_model_manager import SelfModelManager
 from tasks.task_generator import TaskGenerator
 from brain.github_tool import github_tool
+from brain.messenger import messenger
 
 class AutonomousLoop:
     def __init__(self):
@@ -27,17 +28,33 @@ class AutonomousLoop:
 
     def evolve(self, iterations=3):
         evolution_history = []
+        
+        # 0. Self-Repair: Check for open issues to fix before starting new evolution
+        open_issues = github_tool.list_issues()
+        if open_issues:
+            messenger.send_message(f"🛠️ *Autonomous Repair Mode*\nFound {len(open_issues)} issues to fix.")
+            for issue in open_issues[:2]: # Fix top 2 issues to avoid loop bloat
+                repair_mutation = self.mutation_engine.generate_repair_mutation(issue)
+                if repair_mutation and self.safety_guard.validate_mutation(repair_mutation):
+                    if self.self_editor.apply_change(repair_mutation):
+                        github_tool.close_issue(issue["number"])
+                        github_tool.commit_and_push(f"Auto-repair: {issue['title']}")
+                        messenger.send_message(f"✅ *Fixed Issue:* {issue['title']}")
 
         for iteration in range(iterations):
             print(f"\n=== Evolution Iteration {iteration + 1} ===")
 
             # Generate new tasks for this iteration
-            self.task_generator.generate_tasks(count=2, difficulty=iteration + 1)
+            new_tasks = self.task_generator.generate_tasks(count=2, difficulty=iteration + 1)
+            if new_tasks:
+                task_list = "\n".join([f"- {t['goal']}" for t in new_tasks])
+                messenger.send_message(f"📝 *New Tasks Generated:*\n{task_list}")
 
             # 1. Reflection (Analyze previous episodes)
             episodes = self.memory_manager.load_memories()
             reflection = self.reflection_engine.reflect_on_episodes(episodes)
             print(f"Reflection insight: {reflection['insights']}")
+            messenger.send_message(f"🧠 *New Knowledge/Insight:*\n{reflection['insights']}")
 
             # 2. Mutation Generation
             mutation = self.mutation_engine.generate_mutation(reflection)
@@ -64,6 +81,10 @@ class AutonomousLoop:
 
             # 5. Apply Modification
             modification_success = self.self_editor.apply_change(mutation)
+            if modification_success:
+                desc = mutation.get('description', 'Self-improvement')
+                github_tool.commit_and_push(f"Evolution Iteration {iteration + 1} (Trial): {desc}")
+                messenger.send_message(f"🚀 *Mutation Applied & Pushed:*\n{desc}\nTesting starts now...")
 
             # 6. Benchmark & Evaluate
             benchmark_results = self.benchmark_runner.run()
@@ -112,6 +133,7 @@ class AutonomousLoop:
                 print("Selection pressure: Generation rejected. Rolling back...")
                 self.rollback_manager.rollback(snapshot)
                 self.self_model_manager.update_weakness(f"Rejected generation: {mutation}")
+                github_tool.commit_and_push(f"Rollback Iteration {iteration + 1}: Performance below threshold ({success_score:.2f})")
                 github_tool.create_issue(
                     f"Evolution Rollback - Iteration {iteration + 1}",
                     f"Score: {success_score:.2f}. Mutation rejected and rolled back.\nMutation: {mutation.get('description')}"
@@ -119,6 +141,6 @@ class AutonomousLoop:
             else:
                 print("Selection pressure: Generation accepted.")
                 self.self_model_manager.update_strength(f"Successful evolution: {mutation}")
-                github_tool.commit_and_push(f"Evolution Iteration {iteration + 1}: {mutation.get('description', 'Self-improvement')}")
+                github_tool.commit_and_push(f"Evolution Iteration {iteration + 1} (Confirmed): {mutation.get('description')}")
 
         return evolution_history

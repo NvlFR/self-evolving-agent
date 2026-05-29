@@ -1,14 +1,45 @@
 import json
 from brain.llm_client import llm
+from memory.status_manager import status_manager
 
 class MutationEngine:
     def __init__(self):
         pass
 
+    def generate_repair_mutation(self, issue: dict):
+        prompt = f"""
+        You are the SEED Evolution System's Repair Engine. 
+        Your goal is to fix a reported issue in the codebase.
+
+        Reported Issue:
+        Title: {issue['title']}
+        Description: {issue['body']}
+
+        Propose a specific code fix. 
+        Return your proposal as a JSON object with:
+        {{
+            "type": "modify_file",
+            "file_path": "path/to/file.py",
+            "description": "Fix for issue: {issue['title']}",
+            "code": "The complete fixed code for the file",
+            "instruction": "Apply fix to resolve the reported issue"
+        }}
+        """
+        messages = [{"role": "user", "content": prompt}]
+        response = llm.completion(messages, request_type="evolution")
+        try:
+            json_str = llm.extract_json(response)
+            return json.loads(json_str)
+        except: return None
+
     def generate_mutation(self, reflection: dict = None):
+        current_context = status_manager.get_context()
         prompt = f"""
         You are the SEED Evolution System's Mutation Engine. 
-        Your goal is to propose a code modification or a new 'tool' (Python class/function) 
+        {current_context}
+
+        Your goal is to propose a code modification or a new 'tool'...
+
         to improve the agent's performance or capabilities.
 
         Current Reflection/Analysis:
@@ -29,7 +60,7 @@ class MutationEngine:
         """
         
         messages = [{"role": "user", "content": prompt}]
-        response = llm.completion(messages)
+        response = llm.completion(messages, request_type="evolution")
         
         try:
             json_str = llm.extract_json(response)

@@ -1,6 +1,7 @@
 import os
 import litellm
 from dotenv import load_dotenv
+from brain.messenger import messenger
 
 load_dotenv(override=True)
 
@@ -9,13 +10,37 @@ class LLMClient:
         self.api_key = os.getenv("ANTHROPIC_API_KEY")
         self.base_url = os.getenv("ANTHROPIC_BASE_URL")
         self.model = os.getenv("ANTHROPIC_MODEL", "claude-3-5-sonnet-20240620")
-        
-        # litellm expects custom base urls to be passed in a specific way or via environment
-        # For anthropic compatible proxies, we can often just set the base_url.
-        # However, litellm might need 'anthropic/' prefix if it's using the anthropic provider logic.
         self.full_model_name = f"anthropic/{self.model}"
+        
+        # Request limits
+        self.evolution_requests = 0
+        self.meta_requests = 0
+        self.total_requests = 0
+        
+        self.max_evolution = 100 
+        self.max_meta = 20
+        self.max_total = 300
 
-    def completion(self, messages, response_format=None):
+    def completion(self, messages, response_format=None, request_type="utility"):
+        # request_type: "evolution", "meta", "utility"
+        
+        # Enforce limits
+        if self.total_requests >= self.max_total:
+            print(f"🛑 Global LLM request limit reached ({self.max_total}).")
+            return None
+        
+        if request_type == "evolution" and self.evolution_requests >= self.max_evolution:
+            print(f"🛑 Evolution request limit reached ({self.max_evolution}).")
+            return None
+            
+        if request_type == "meta" and self.meta_requests >= self.max_meta:
+            print(f"🛑 Meta Reasoning request limit reached ({self.max_meta}).")
+            return None
+
+        # Notify Telegram Request
+        prompt = messages[-1]['content']
+        messenger.notify_request(request_type.upper(), prompt)
+        
         try:
             response = litellm.completion(
                 model=self.full_model_name,
@@ -24,40 +49,72 @@ class LLMClient:
                 base_url=self.base_url,
                 response_format=response_format
             )
-            return response.choices[0].message.content
+            content = response.choices[0].message.content
+            
+            # Update counters
+            self.total_requests += 1
+            if request_type == "evolution":
+                self.evolution_requests += 1
+            elif request_type == "meta":
+                self.meta_requests += 1
+
+            # Log raw response for debugging
+            with open("logs/llm_raw.log", "a") as f:
+                f.write(f"\n--- PROMPT ({request_type}) ---\n{prompt[:200]}...\n")
+                f.write(f"--- RESPONSE ---\n{content}\n")
+            
+            # Notify Telegram Response
+            messenger.notify_response(request_type.upper(), content)
+            
+            return content
         except Exception as e:
             print(f"LLM Error: {e}")
+            messenger.send_message(f"❌ *LLM ERROR*\n{str(e)}")
             return None
 
     @staticmethod
     def extract_json(text):
         if not text:
-            return None
+            return ""
         
-        # Try to find JSON block
-        if "```json" in text:
-            try:
-                return text.split("```json")[1].split("```")[0].strip()
-            except: pass
-        if "```" in text:
-            try:
-                return text.split("```")[1].split("```")[0].strip()
-            except: pass
+        import json
+        import re
+
+        # Strategy 1: Look for JSON code blocks (markdown)
+        # We take the LAST one because reasoning often includes example blocks first
+        json_blocks = re.findall(r"```json\s*(.*?)\s*```", text, re.DOTALL)
+        if json_blocks:
+            return json_blocks[-1].strip()
             
-        # Try to find the first '[' or '{' and last ']' or '}'
-        start_curly = text.find('{')
-        start_bracket = text.find('[')
+        json_blocks = re.findall(r"```\s*(.*?)\s*```", text, re.DOTALL)
+        if json_blocks:
+            for block in reversed(json_blocks):
+                candidate = block.strip()
+                if candidate.startswith(("{", "[")):
+                    return candidate
+
+        # Strategy 2: Search for the last valid JSON object/list using JSONDecoder
+        # This is more robust against conversational filler
+        best_json = ""
         
-        start = -1
-        if start_curly != -1 and (start_bracket == -1 or start_curly < start_bracket):
-            start = start_curly
-            end = text.rfind('}')
-        elif start_bracket != -1:
-            start = start_bracket
-            end = text.rfind(']')
-            
-        if start != -1 and end != -1 and end > start:
-            return text[start:end+1].strip()
+        # We search from the end to find the most likely "final" answer
+        for i in range(len(text)):
+            char = text[i]
+            if char in ('{', '['):
+                try:
+                    # Attempt to decode starting from this position
+                    decoder = json.JSONDecoder()
+                    obj, end_index = decoder.raw_decode(text[i:])
+                    # If we found a valid object, it's a candidate
+                    # We keep looking to find the *last* one or the most complete one
+                    candidate = text[i:i+end_index].strip()
+                    if len(candidate) > len(best_json):
+                        best_json = candidate
+                except (json.JSONDecodeError, ValueError):
+                    continue
+        
+        if best_json:
+            return best_json
             
         return text.strip()
 

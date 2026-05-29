@@ -293,5 +293,55 @@
     "id": "gen_task_59",
     "goal": "find prime numbers up to 431",
     "difficulty": 5
+  },
+  {
+    "id": "gen_task_60",
+    "goal": "Write a function that takes a list of integers and returns the maximum value.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_61",
+    "goal": "Create a simple command\u2011line calculator that performs addition, subtraction, multiplication, and division on two numbers.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_62",
+    "goal": "Write a function that checks whether a given integer is even and returns a boolean value.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_63",
+    "goal": "Implement a recursive function that returns the factorial of a non\u2011negative integer.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_64",
+    "goal": "Write a function that takes a list of integers and returns the sum of its elements.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_65",
+    "goal": "Write a function that checks whether a given string is a palindrome (case-insensitive).",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_66",
+    "goal": "Write a function that takes a list of numbers and returns the sum of all even numbers in the list",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_67",
+    "goal": "Create a function that checks if a given year is a leap year",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_68",
+    "goal": "Implement a function that takes a list of integers and returns the sum of its elements.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_69",
+    "goal": "Write a function that determines whether a given integer is a prime number.",
+    "difficulty": 1
   }
 ]

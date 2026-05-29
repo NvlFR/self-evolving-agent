@@ -1,5 +1,6 @@
 import os
 import subprocess
+import json
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -47,10 +48,30 @@ class GitHubTool:
             print(f"GitHub Updated: {message}")
             return True
         except Exception as e:
-            # If nothing to commit, it's not really an error for the evolution loop
             if "nothing to commit" in str(e).lower():
                 return True
             print(f"Error during git update: {e}")
+            return False
+
+    def list_issues(self):
+        try:
+            result = subprocess.run(
+                ["gh", "issue", "list", "--json", "number,title,body", "--state", "open"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            return json.loads(result.stdout)
+        except Exception as e:
+            print(f"Error listing GitHub issues: {e}")
+            return []
+
+    def close_issue(self, issue_number):
+        try:
+            subprocess.run(["gh", "issue", "close", str(issue_number)], check=True)
+            return True
+        except Exception as e:
+            print(f"Error closing issue {issue_number}: {e}")
             return False
 
 github_tool = GitHubTool()
