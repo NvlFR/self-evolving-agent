@@ -2,6 +2,7 @@ import os
 import litellm
 import requests
 import json
+import re
 from dotenv import load_dotenv
 from brain.messenger import messenger
 
@@ -9,7 +10,7 @@ load_dotenv(override=True)
 
 class LLMClient:
     def __init__(self):
-        # Primary Config (Anthropic via Proxy)
+        # Primary Config
         self.api_key = os.getenv("ANTHROPIC_API_KEY")
         self.base_url = os.getenv("ANTHROPIC_BASE_URL")
         self.model = os.getenv("ANTHROPIC_MODEL", "cu/claude-4.5-sonnet")
@@ -20,7 +21,12 @@ class LLMClient:
         self.model_list = self._fetch_model_list()
         self.current_model_idx = 0
         
+        # Request limits
+        self.evolution_requests = 0
+        self.meta_requests = 0
         self.total_requests = 0
+        self.max_evolution = 100 
+        self.max_meta = 20
         self.max_total = 300
 
     def _fetch_model_list(self):
@@ -31,19 +37,21 @@ class LLMClient:
             data = response.json()
             return [m["id"] for m in data["data"]]
         except Exception as e:
-            print(f"Gagal mengambil daftar model: {e}")
+            print(f"Error fetching model list: {e}")
             return ["cu/claude-4.5-sonnet", "kr/claude-sonnet-4.5-agentic"]
 
     def completion(self, messages, response_format=None, request_type="utility"):
-        # 1. Coba Primary
+        # 1. Try Primary
         result = self._attempt_completion(messages, self.api_key, self.base_url, self.model, request_type, is_fallback=False)
         
-        # 2. Coba Fallback kalau error quota/rate limit
+        # 2. Try Fallbacks
         while result == "ERROR_QUOTA" and self.current_model_idx < len(self.model_list):
             fallback_model = self.model_list[self.current_model_idx]
             self.current_model_idx += 1
             
-            messenger.send_message(f"⚠️ *Model Utama limit, switch ke:* `{fallback_model}`")
+            print(f"Primary quota exceeded. Switching to fallback model: {fallback_model}...")
+            messenger.send_message(f"⚠️ *Primary Quota Exceeded. Switched to Fallback Model:* `{fallback_model}`")
+            
             result = self._attempt_completion(messages, self.fallback_api_key, self.fallback_base_url, fallback_model, request_type, is_fallback=True)
             
         return result
@@ -51,6 +59,10 @@ class LLMClient:
     def _attempt_completion(self, messages, api_key, base_url, model, request_type, is_fallback):
         if self.total_requests >= self.max_total:
             return None
+        
+        if not is_fallback:
+            prompt = messages[-1]['content']
+            messenger.notify_request(request_type.upper(), prompt)
         
         try:
             custom_headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
@@ -63,25 +75,48 @@ class LLMClient:
                 headers=custom_headers
             )
             content = response.choices[0].message.content
-            self.total_requests += 1
-            return content
             
+            self.total_requests += 1
+            if request_type == "evolution": self.evolution_requests += 1
+            elif request_type == "meta": self.meta_requests += 1
+
+            if not is_fallback:
+                messenger.notify_response(request_type.upper(), content)
+            
+            return content
         except Exception as e:
-            err = str(e).lower()
-            if any(key in err for key in ["429", "rate", "over_quota", "unavailable", "limit"]):
+            err_msg = str(e).lower()
+            if any(term in err_msg for term in ["rate", "429", "over_quota", "limit reached", "ratelimiterror", "unavailable"]):
                 return "ERROR_QUOTA"
             
-            print(f"Error fatal LLM: {err}")
+            print(f"LLM Error (model={model}, fallback={is_fallback}): {err_msg}")
             if not is_fallback:
-                messenger.send_message(f"❌ *LLM ERROR*\n{err[:200]}")
+                messenger.send_message(f"❌ *LLM ERROR*\n{err_msg[:200]}")
             return None
 
     @staticmethod
     def extract_json(text):
         if not text: return ""
-        import re, json
+        
+        # Strategy 1: Look for JSON code blocks
         json_blocks = re.findall(r"```json\s*(.*?)\s*```", text, re.DOTALL)
         if json_blocks: return json_blocks[-1].strip()
-        return text.strip()
+            
+        json_blocks = re.findall(r"```\s*(.*?)\s*```", text, re.DOTALL)
+        if json_blocks:
+            for block in reversed(json_blocks):
+                candidate = block.strip()
+                if candidate.startswith(("{", "[")): return candidate
+
+        # Strategy 2: Search for the last valid JSON
+        best_json = ""
+        for i in range(len(text)):
+            if text[i] in ('{', '['):
+                try:
+                    obj, end_index = json.JSONDecoder().raw_decode(text[i:])
+                    candidate = text[i:i+end_index].strip()
+                    if len(candidate) > len(best_json): best_json = candidate
+                except: continue
+        return best_json if best_json else text.strip()
 
 llm = LLMClient()
