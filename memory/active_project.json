@@ -5,36 +5,70 @@
   "tasks": [
     {
       "id": 1,
+
+      "title": "Inisialisasi proyek dan struktur direktori",
+      "description": "Buat folder task-tracker. Init package.json via npm init. Buat struktur: src/ untuk kode, tests/ untuk test, data/ untuk file JSON. Install dependencies (commander/chalk/jest)",
+
       "title": "Setup struktur proyek",
       "description": "Buat direktori proyek task-tracker. Inisialisasi package.json. Buat entry point index.js. Siapkan folder src/ dan data/.",
+
       "priority": "high"
     },
     {
       "id": 2,
+
+      "title": "Definisi struktur data Task dalam memori",
+      "description": "Buat class Task di src/task.js. Properti: id (UUID), deskripsi, status (pending/done), createdAt. Method: create, delete, toJSON",
+
       "title": "Buat modul penyimpanan file JSON",
       "description": "Buat src/storage.js. Implementasi fungsi readTasks() baca dari data/tasks.json. Implementasi fungsi writeTasks() tulis ke data/tasks.json. Handle file tidak ada, buat default array kosong.",
+
       "priority": "high"
     },
     {
       "id": 3,
+
+      "title": "Implementasi penyimpanan JSON",
+      "description": "Buat module storage.js. Baca/tulis ke data/tasks.json. Handle file tidak ada, corrupt, validasi schema saat load",
+
       "title": "Implementasi fitur tambah tugas",
       "description": "Buat src/commands/add.js. Ambil input deskripsi dari argumen CLI. Generate ID unik (timestamp atau increment). Buat objek task { id, description, completed: false, createdAt }. Simpan ke file JSON via storage.js.",
+
       "priority": "high"
     },
     {
       "id": 4,
+
+      "title": "Fitur tambah tugas baru",
+      "description": "implement task add <deskripsi>. Validasi input kosong. Auto generate ID. Simpan ke file via storage.js",
+
       "title": "Implementasi fitur lihat semua tugas",
       "description": "Buat src/commands/list.js. Baca semua task dari storage.js. Tampilkan tabel di console. Kolom: ID, Deskripsi, Status (\u2713/\u2717), Dibuat. Gunakan console.table atau format manual.",
+
       "priority": "high"
     },
     {
       "id": 5,
+      "title": "Fitur lihat semua tugas",
+      "description": "implement task list. Tampilkan tabel: ID, Deskripsi, Status, Created. Color: hijau done, merah pending",
+
       "title": "Implementasi fitur tandai tugas selesai",
       "description": "Buat src/commands/done.js. Ambil ID task dari argumen CLI. Cari task berdasarkan ID. Ubah completed jadi true. Simpan ulang ke storage.js. Tampilkan konfirmasi.",
+
       "priority": "high"
     },
     {
       "id": 6,
+
+      "title": "Fitur tandai selesai",
+      "description": "implement task done <id>. Cek ID exist. Update status. Save",
+      "priority": "medium"
+    },
+    {
+      "id": 7,
+      "title": "Fitur hapus tugas",
+      "description": "implement task delete <id>. Konfirmasi sebelum hapus. Save",
+
       "title": "Buat entry point CLI utama",
       "description": "Buat index.js. Parse process.argv. Routing perintah: add, list, done. Tampilkan help text jika perintah tidak valid. Contoh: node index.js add \"Belajar coding\".",
       "priority": "high"
@@ -43,10 +77,27 @@
       "id": 7,
       "title": "Handle error dan edge case",
       "description": "Validasi input kosong. Handle task tidak ditemukan. Handle file JSON corrupt. Tampilkan pesan error yang jelas.",
+
       "priority": "medium"
     },
     {
       "id": 8,
+
+      "title": "Index command utama",
+      "description": "Buat bin/task-cli.js. Commander: add, list, done, delete. Import modul. Validasi argumen CLI",
+      "priority": "high"
+    },
+    {
+      "id": 9,
+      "title": "Unit test",
+      "description": "Buat tests/task.js. 100% coverage. Mock file I/O",
+      "priority": "high"
+    },
+    {
+      "id": 10,
+      "title": "Siap produksi",
+      "description": "package.json: main, bin, scripts. README: install, run, test. Validasi semua fitur",
+      "priority": "high"
       "title": "Setup bin untuk global install",
       "description": "Tambah field bin di package.json. Buat symlink ke index.js. Test jalankan via npx task-tracker.",
       "priority": "medium"
@@ -56,7 +107,8 @@
       "title": "Tulis dokumentasi README",
       "description": "Update README.md. Cara install. Cara pakai setiap fitur. Contoh perintah. Screenshot output CLI.",
       "priority": "low"
+
     }
   ],
-  "current_task_index": 1
+  "current_task_index": 2
 }

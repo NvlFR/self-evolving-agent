@@ -13,7 +13,7 @@ class LLMClient:
         # Primary Config (Olagon)
         self.api_key = os.getenv("OLAGON_ANTHROPIC_API_KEY")
         self.base_url = os.getenv("OLAGON_ANTHROPIC_BASE_URL")
-        self.model = os.getenv("OLAGON_ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022")
+        self.model = os.getenv("OLAGON_ANTHROPIC_MODEL", "claude-3-5-sonnet-20240620")
         
         # Fallback Config (9router)
         self.fallback_api_key = os.getenv("9ROUTER_API_KEY")
@@ -123,7 +123,6 @@ class LLMClient:
         
         with open(log_file, "a") as f:
             f.write(f"\n--- REQUEST ({model}) ---\n{json.dumps(messages)}\n")
-
         try:
             custom_headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
             
