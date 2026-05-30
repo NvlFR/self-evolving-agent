@@ -108,6 +108,10 @@ class LLMClient:
         return result
 
     def _attempt_completion(self, messages, api_key, base_url, model, request_type, is_fallback):
+        # Explicit Logging
+        log_file = "logs/llm_raw.log"
+        os.makedirs("logs", exist_ok=True)
+        
         if self.total_requests >= self.max_total:
             print("🛑 Total request limit reached.")
             return None
@@ -117,6 +121,9 @@ class LLMClient:
         prompt = messages[-1]['content']
         messenger.notify_request(f"{prefix}{request_type.upper()}", prompt)
         
+        with open(log_file, "a") as f:
+            f.write(f"\n--- REQUEST ({model}) ---\n{json.dumps(messages)}\n")
+
         try:
             custom_headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
             
@@ -135,6 +142,9 @@ class LLMClient:
                 headers=custom_headers
             )
             content = response.choices[0].message.content
+            
+            with open(log_file, "a") as f:
+                f.write(f"\n--- RESPONSE ({model}) ---\n{content}\n")
             
             # Update counters
             self.total_requests += 1

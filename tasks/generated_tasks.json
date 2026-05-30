@@ -396,11 +396,14 @@
   },
   {
     "id": "gen_task_80",
+
+    "goal": "Write a function that checks if a string is a palindrome",
     "goal": "Write a function that reverses a string without using built-in reverse methods",
     "difficulty": 1
   },
   {
     "id": "gen_task_81",
+    "goal": "Write a function that sums all even numbers in a list",
     "goal": "Create a function that checks if a word is a palindrome (case-insensitive)",
     "difficulty": 1
   }
