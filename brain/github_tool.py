@@ -37,19 +37,27 @@ class GitHubTool:
 
     def create_repo(self, name, description, private=False):
         try:
-            visibility = "--private" if private else "--public"
-            result = subprocess.run(
-                ["gh", "repo", "create", name, visibility, "--description", description, "--confirm"],
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            print(f"GitHub Repo Created: {name}")
+            # Cek apakah repo sudah ada
+            subprocess.run(["gh", "repo", "view", name], capture_output=True, check=True)
+            print(f"GitHub Repo '{name}' already exists.")
             return True
-        except Exception as e:
-            if "already exists" in str(e).lower():
+        except subprocess.CalledProcessError:
+            # Repo tidak ditemukan, lanjut buat baru
+            try:
+                visibility = "--private" if private else "--public"
+                subprocess.run(
+                    ["gh", "repo", "create", name, visibility, "--description", description, "--confirm"],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                print(f"GitHub Repo Created: {name}")
                 return True
-            print(f"Error creating GitHub repo: {e}")
+            except Exception as e:
+                print(f"Error creating GitHub repo: {e}")
+                return False
+        except Exception as e:
+            print(f"Error checking GitHub repo: {e}")
             return False
 
     def commit_and_push(self, message, cwd=None):
