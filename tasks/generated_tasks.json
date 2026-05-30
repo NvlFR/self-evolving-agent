@@ -403,5 +403,15 @@
     "id": "gen_task_81",
     "goal": "Create a function that checks if a word is a palindrome (case-insensitive)",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_82",
+    "goal": "Print 'Hello, World!' to the console",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_83",
+    "goal": "Find two numbers in list that sum to target value, return their indices",
+    "difficulty": 2
   }
 ]

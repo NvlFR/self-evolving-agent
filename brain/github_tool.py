@@ -38,17 +38,22 @@ class GitHubTool:
     def create_repo(self, name, description, private=False):
         try:
             visibility = "--private" if private else "--public"
-            result = subprocess.run(
-                ["gh", "repo", "create", name, visibility, "--description", description, "--confirm"],
+            subprocess.run(
+                ["gh", "repo", "create", name, visibility, "--description", description],
                 capture_output=True,
                 text=True,
                 check=True
             )
             print(f"GitHub Repo Created: {name}")
             return True
-        except Exception as e:
-            if "already exists" in str(e).lower():
+        except subprocess.CalledProcessError as e:
+            if "already exists" in e.stderr:
+                print(f"GitHub Repo '{name}' already exists (caught by creation error).")
                 return True
+            print(f"Error creating GitHub repo: {e.stderr}")
+            return False
+
+
             print(f"Error creating GitHub repo: {e}")
             return False
 
