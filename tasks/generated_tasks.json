@@ -393,5 +393,15 @@
     "id": "gen_task_79",
     "goal": "Create a program that takes two integers as input and returns the product of those two numbers.",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_80",
+    "goal": "Write a function that reverses a string without using built-in reverse methods",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_81",
+    "goal": "Create a function that checks if a word is a palindrome (case-insensitive)",
+    "difficulty": 1
   }
 ]
