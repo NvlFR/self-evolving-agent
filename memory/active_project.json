@@ -5,64 +5,52 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Inisialisasi Proyek dan Struktur Direktori",
-      "description": "Menyiapkan boilerplate proyek, inisialisasi manajemen paket (seperti npm/pip/go mod), dan mengatur struktur folder yang bersih (src, tests, data). Membuat file entry point utama.",
+      "title": "Inisialisasi struktur proyek",
+      "description": "Buat struktur direktori proyek task-tracker dengan inisialisasi package.json, buat entry point utama (misal index.js), dan siapkan folder untuk modul-modul inti.",
       "priority": "high"
     },
     {
       "id": 2,
-      "title": "Definisi Model Data 'Task'",
-      "description": "Membuat struktur data atau interface untuk 'Task' yang mencakup atribut: id (UUID/Auto-increment), description (string), status (todo/done), created_at (timestamp), dan updated_at (timestamp).",
+      "title": "Implementasi modul penyimpanan berbasis file JSON",
+      "description": "Buat modul yang mampu membaca dan menulis data tugas ke dalam file JSON. Modul ini harus menangani pembacaan seluruh isi file, penambahan data baru, penulisan ulang file, serta penanganan kesalahan baca/tulis.",
       "priority": "high"
     },
     {
       "id": 3,
-      "title": "Implementasi Layer Persistensi JSON",
-      "description": "Membuat fungsi helper untuk membaca dari dan menulis ke file `tasks.json`. Harus mencakup penanganan error jika file tidak ditemukan atau format JSON korup (validasi skema).",
+      "title": "Implementasi fungsi 'Tambah tugas baru'",
+      "description": "Buat perintah CLI yang menerima deskripsi tugas dan menyimpannya ke file JSON menggunakan modul penyimpanan yang telah dibuat.",
       "priority": "high"
     },
     {
       "id": 4,
-      "title": "Pengembangan CLI Argument Parser",
-      "description": "Mengimplementasikan logic untuk menangkap input command line (seperti 'add', 'list', 'done'). Menggunakan library seperti argparse (Python), commander (Node.js), atau flag (Go) untuk standarisasi.",
+      "title": "Implementasi fungsi 'Lihat semua tugas'",
+      "description": "Buat perintah CLI yang membaca file JSON dan menampilkan seluruh tugas dalam format yang mudah dibaca, lengkap dengan status masing-masing.",
       "priority": "high"
     },
     {
       "id": 5,
-      "title": "Implementasi Fitur: Tambah Tugas (Add Task)",
-      "description": "Logika untuk menerima input deskripsi tugas, membuat objek task baru dengan status default 'todo', dan menyimpannya ke dalam file JSON.",
+      "title": "Implementasi fungsi 'Tandai tugas selesai'",
+      "description": "Buat perintah CLI yang menerima indeks atau ID tugas dan mengubah statusnya menjadi selesai, lalu menyimpan kembali ke file JSON.",
       "priority": "high"
     },
     {
       "id": 6,
-      "title": "Implementasi Fitur: Lihat Semua Tugas (List Tasks)",
-      "description": "Logika untuk membaca seluruh data dari file JSON dan menampilkannya ke terminal dalam format yang rapi (misal: bentuk tabel) disertai dengan informasi ID dan status.",
+      "title": "Penanganan kesalahan dan validasi input",
+      "description": "Tambahkan penanganan kesalahan untuk input tidak valid, file JSON rusak atau tidak ada, serta kasus-kasus batas seperti daftar tugas kosong.",
       "priority": "medium"
     },
     {
       "id": 7,
-      "title": "Implementasi Fitur: Tandai Selesai (Mark as Done)",
-      "description": "Logika untuk mencari tugas berdasarkan ID tertentu, mengubah statusnya menjadi 'done', memperbarui timestamp 'updated_at', dan menyimpan kembali ke file JSON.",
-      "priority": "high"
+      "title": "Setup bantuan pengguna dan dokumentasi penggunaan",
+      "description": "Perintah bantuan yang menampilkan daftar perintah yang tersedia. Dokumentasi penggunaan ditambahkan di README proyek.",
+      "priority": "low"
     },
     {
       "id": 8,
-      "title": "Validasi Input dan Error Handling",
-      "description": "Menambahkan validasi agar deskripsi tugas tidak kosong, penanganan input ID yang tidak ditemukan, dan pesan error yang user-friendly jika terjadi kegagalan sistem.",
-      "priority": "high"
-    },
-    {
-      "id": 9,
-      "title": "Implementasi Unit Testing",
-      "description": "Membuat automated tests untuk memvalidasi fungsi-fungsi inti seperti penambahan tugas, pembaruan status, dan integritas pembacaan file JSON.",
+      "title": "Uji coba menyeluruh semua perintah CLI",
+      "description": "Lakukan pengujian manual dan/otomatis untuk semua fitur. Pastikan penambahan, penampilan, dan penyimpanan berfungsi dengan benar.",
       "priority": "medium"
-    },
-    {
-      "id": 10,
-      "title": "Finalisasi UI/UX CLI dan Dokumentasi",
-      "description": "Mempercantik output terminal dengan warna (opsional) dan memperbarui README dengan instruksi instalasi serta cara penggunaan perintah CLI secara detail.",
-      "priority": "low"
     }
   ],
-  "current_task_index": 1
+  "current_task_index": 0
 }

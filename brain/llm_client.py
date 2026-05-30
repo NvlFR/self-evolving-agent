@@ -36,6 +36,7 @@ class LLMClient:
         
         # New: Sticky and Efficiency logic
         self.is_primary_down = False
+        self.consecutive_primary_failures = 0
         self.primary_check_counter = 0
         self.current_fallback_idx = 0
         
@@ -58,11 +59,26 @@ class LLMClient:
         if should_try_primary:
             result = self._attempt_completion(messages, self.api_key, self.base_url, self.model, request_type, is_fallback=False)
             if result != "ERROR_QUOTA" and result is not None:
+                if self.is_primary_down:
+                    print("✅ Primary AI is BACK UP. Resetting status.")
+                    messenger.send_message("✅ *Primary AI is back online.*")
                 self.is_primary_down = False
+                self.consecutive_primary_failures = 0
                 return result
             else:
-                self.is_primary_down = True
-                print("🛑 Primary is down or limited. Sticking to fallback mode.")
+                self.consecutive_primary_failures += 1
+                if self.consecutive_primary_failures >= 2:
+                    if not self.is_primary_down:
+                        print("🛑 Primary AI hit multiple errors. Switching to STICKY FALLBACK mode.")
+                        messenger.send_message("⚠️ *Primary AI is down. Switching to sticky fallback mode.*")
+                    self.is_primary_down = True
+                
+                if not self.is_primary_down:
+                    # If not yet "officially" down, try next fallback but don't stay there yet
+                    pass 
+                else:
+                    # If officially down, result is already ERROR_QUOTA, loop will handle fallback
+                    pass
 
         # 2. Try Fallbacks (Sticky mode)
         self.fallback_attempts = 0 

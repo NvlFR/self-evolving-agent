@@ -383,5 +383,15 @@
     "id": "gen_task_77",
     "goal": "Implement a basic LRU (Least Recently Used) cache with `get(key)` and `put(key, value)` methods using Python's `collections.OrderedDict`.",
     "difficulty": 2
+  },
+  {
+    "id": "gen_task_78",
+    "goal": "Write a function that accepts a name as a string and returns a greeting message like 'Hello, [name]!'.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_79",
+    "goal": "Create a program that takes two integers as input and returns the product of those two numbers.",
+    "difficulty": 1
   }
 ]
