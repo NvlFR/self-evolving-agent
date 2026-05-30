@@ -1,57 +1,70 @@
+"""
+Task Tracker - Main Module
+
+This module handles the core project initialization and directory structure setup
+for the task-tracker project.
+"""
 import os
+import json
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-DIRS = [
-    PROJECT_ROOT / "src",
-    PROJECT_ROOT / "tests",
-    PROJECT_ROOT / "docs"
-]
+def create_project_structure(base_dir="task-tracker"):
+    """
+    Creates the boilerplate project structure with necessary directories and files.
+    
+    Args:
+        base_dir (str): The root directory for the project.
+    
+    Returns:
+        dict: A dictionary containing the paths of created directories and files.
+    """
+    # Define directory structure
+    directories = [
+        os.path.join(base_dir, "src"),
+        os.path.join(base_dir, "tests"),
+        os.path.join(base_dir, "data"),
+    ]
+    
+    # Create directories
+    for directory in directories:
+        Path(directory).mkdir(parents=True, exist_ok=True)
+        print(f"Created directory: {directory}")
+    
+    # Create entry point main file
+    main_file = os.path.join(base_dir, "src", "main.py")
+    main_code = '''#!/usr/bin/env python3
+"""Entry point for the task-tracker application."""
 
-def init_structure():
-    for d in DIRS:
-        d.mkdir(parents=True, exist_ok=True)
-        print(f"Created directory: {d}")
-
-    cli_file = PROJECT_ROOT / "src" / "module.py"
-    cli_code = (
-        "#!/usr/bin/env python3\n"
-        "\"\"\"Task Tracker CLI - Main entry point.\"\"\"\n"
-        "\n"
-        "import argparse\n"
-        "import sys\n"
-        "\n"
-        "def main():\n"
-        "    parser = argparse.ArgumentParser(description=\"Task Tracker CLI\")\n"
-        "    subparsers = parser.add_subparsers(dest=\"command\", help=\"Available commands\")\n"
-        "\n"
-        "    # Example: add command\n"
-        "    add_parser = subparsers.add_parser(\"add\", help=\"Add a new task\")\n"
-        "    add_parser.add_argument(\"title\", help=\"Title of the task\")\n"
-        "\n"
-        "    # Example: list command\n"
-        "    list_parser = subparsers.add_parser(\"list\", help=\"List all tasks\")\n"
-        "    list_parser.add_argument(\"--status\", help=\"Filter by status\", default=None)\n"
-        "\n"
-        "    args = parser.parse_args()\n"
-        "\n"
-        "    if not args.command:\n"
-        "        parser.print_help()\n"
-        "        sys.exit(1)\n"
-        "\n"
-        "    if args.command == \"add\":\n"
-        "        print(f\"Adding task: {args.title}\")\n"
-        "        # TODO: Implement add functionality\n"
-        "    elif args.command == \"list\":\n"
-        "        print(\"Listing tasks...\")\n"
-        "        # TODO: Implement list functionality\n"
-        "\n"
-        "if __name__ == \"__main__\":\n"
-        "    main()\n"
-    )
-    cli_file.write_text(cli_code)
-    print(f"Created CLI entry point: {cli_file}")
+def main():
+    print("Task Tracker is running!")
 
 if __name__ == "__main__":
-    init_structure()
+    main()
+'''
+    with open(main_file, "w") as f:
+        f.write(main_code)
+    print(f"Created file: {main_file}")
+    
+    # Create requirements file
+    requirements_file = os.path.join(base_dir, "requirements.txt")
+    requirements_content = "# Dependencies for task-tracker project"
+    with open(requirements_file, "w") as f:
+        f.write(requirements_content)
+    print(f"Created file: {requirements_file}")
+    
+    # Create README
+    readme_file = os.path.join(base_dir, "README.md")
+    readme_content = "# Task Tracker\n\nA simple task tracking application."
+    with open(readme_file, "w") as f:
+        f.write(readme_content)
+    print(f"Created file: {readme_file}")
+    
+    return {
+        "directories": directories,
+        "files": [main_file, requirements_file, readme_file]
+    }
+
+
+if __name__ == "__main__":
+    create_project_structure()
