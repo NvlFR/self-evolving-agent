@@ -363,5 +363,15 @@
     "id": "gen_task_73",
     "goal": "Create a function that determines whether a given string is a palindrome (ignoring spaces and case).",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_74",
+    "goal": "Write a function that computes the sum of all even integers in a given list",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_75",
+    "goal": "Implement a function that returns the second smallest distinct number from a list of integers",
+    "difficulty": 1
   }
 ]
