@@ -23,13 +23,14 @@ class ReflectionEngine:
             })
 
         prompt = f"""
-        You are the SEED Evolution System's Reflection Engine.
-        Analyze the following recent execution episodes and provide insights:
+        Kamu adalah Mesin Refleksi (Reflection Engine) Sistem Evolusi SEED.
+        Analisa episode eksekusi terbaru berikut dan berikan wawasan (insight):
         {json.dumps(summary, indent=2)}
 
-        Identify patterns of failure or success. 
-        Propose hypotheses for how the agent can improve its architecture or tools.
-        Return the response as a JSON object with 'insights' (string) and 'hypotheses' (list of strings).
+        Identifikasi pola kegagalan atau keberhasilan. 
+        Usulkan hipotesa tentang bagaimana agen bisa meningkatkan arsitektur atau tool-nya.
+        Kembalikan respon dalam objek JSON dengan 'insights' (string) dan 'hypotheses' (list string).
+        PENTING: Semua teks 'insights' dan 'hypotheses' HARUS dalam Bahasa Indonesia.
         """
         
         messages = [{"role": "user", "content": prompt}]

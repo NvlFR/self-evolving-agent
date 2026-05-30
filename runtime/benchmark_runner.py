@@ -36,13 +36,13 @@ class BenchmarkRunner:
             
             # 2. Generate Code based on Plan and Goal
             prompt = f"""
-            You are the SEED Evolution System's Coder.
-            Task: {task['goal']}
-            Plan: {json.dumps(plan)}
+            Kamu adalah Programmer Sistem Evolusi SEED.
+            Tugas: {task['goal']}
+            Rencana: {json.dumps(plan)}
 
-            Write a Python script to solve this task. 
-            Include necessary print statements to verify the output.
-            Return ONLY the Python code. No markdown formatting.
+            Tulis skrip Python untuk menyelesaikan tugas ini. 
+            Sertakan perintah print yang diperlukan untuk memverifikasi output.
+            Kembalikan HANYA kode Python. Jangan gunakan format markdown.
             """
             messages = [{"role": "user", "content": prompt}]
             code = llm.completion(messages)

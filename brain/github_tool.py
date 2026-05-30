@@ -20,13 +20,14 @@ class GitHubTool:
             except Exception as e:
                 print(f"GitHub Auth Error: {e}")
 
-    def create_issue(self, title, body):
+    def create_issue(self, title, body, cwd=None):
         try:
             result = subprocess.run(
                 ["gh", "issue", "create", "--title", title, "--body", body],
                 capture_output=True,
                 text=True,
-                check=True
+                check=True,
+                cwd=cwd
             )
             print(f"GitHub Issue Created: {result.stdout.strip()}")
             return True
@@ -34,64 +35,67 @@ class GitHubTool:
             print(f"Error creating GitHub issue: {e}")
             return False
 
-    def commit_and_push(self, message):
+    def create_repo(self, name, description, private=False):
         try:
-            # Generate a unique branch name for this evolution
-            import time
-            branch_name = f"evolution-{int(time.time())}"
-            
-            # Create and switch to new branch
-            subprocess.run(["git", "checkout", "-b", branch_name], check=True)
-            
-            # Stage changes
-            subprocess.run(["git", "add", "."], check=True)
-            
-            # Commit
-            subprocess.run(["git", "commit", "-m", message], check=True)
-            
-            # Push new branch
-            subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
-            
-            # Create Pull Request
-            pr_result = subprocess.run(
-                ["gh", "pr", "create", "--title", message, "--body", f"Autonomous improvement from SEED System.\n\nDetails: {message}", "--base", "main"],
+            visibility = "--private" if private else "--public"
+            result = subprocess.run(
+                ["gh", "repo", "create", name, visibility, "--description", description, "--confirm"],
                 capture_output=True,
                 text=True,
                 check=True
             )
+            print(f"GitHub Repo Created: {name}")
+            return True
+        except Exception as e:
+            if "already exists" in str(e).lower():
+                return True
+            print(f"Error creating GitHub repo: {e}")
+            return False
+
+    def commit_and_push(self, message, cwd=None):
+        try:
+            import time
+            branch_name = f"evolution-{int(time.time())}"
+            subprocess.run(["git", "checkout", "-b", branch_name], check=True, cwd=cwd)
+            subprocess.run(["git", "add", "."], check=True, cwd=cwd)
+            subprocess.run(["git", "commit", "-m", message], check=True, cwd=cwd)
+            subprocess.run(["git", "push", "-u", "origin", branch_name], check=True, cwd=cwd)
             
+            pr_result = subprocess.run(
+                ["gh", "pr", "create", "--title", message, "--body", f"Autonomous improvement from SEED System.\n\nDetails: {message}", "--base", "main"],
+                capture_output=True,
+                text=True,
+                check=True,
+                cwd=cwd
+            )
             print(f"GitHub PR Created: {pr_result.stdout.strip()}")
-            
-            # Switch back to main for the next cycle
-            subprocess.run(["git", "checkout", "main"], check=True)
-            
+            subprocess.run(["git", "checkout", "main"], check=True, cwd=cwd)
             return True
         except Exception as e:
             if "nothing to commit" in str(e).lower():
-                # If nothing to commit, just stay on main
-                subprocess.run(["git", "checkout", "main"], capture_output=True)
+                subprocess.run(["git", "checkout", "main"], capture_output=True, cwd=cwd)
                 return True
             print(f"Error during git PR creation: {e}")
-            # Ensure we are back on main even on error
-            subprocess.run(["git", "checkout", "main"], capture_output=True)
+            subprocess.run(["git", "checkout", "main"], capture_output=True, cwd=cwd)
             return False
 
-    def list_issues(self):
+    def list_issues(self, cwd=None):
         try:
             result = subprocess.run(
                 ["gh", "issue", "list", "--json", "number,title,body", "--state", "open"],
                 capture_output=True,
                 text=True,
-                check=True
+                check=True,
+                cwd=cwd
             )
             return json.loads(result.stdout)
         except Exception as e:
             print(f"Error listing GitHub issues: {e}")
             return []
 
-    def close_issue(self, issue_number):
+    def close_issue(self, issue_number, cwd=None):
         try:
-            subprocess.run(["gh", "issue", "close", str(issue_number)], check=True)
+            subprocess.run(["gh", "issue", "close", str(issue_number)], check=True, cwd=cwd)
             return True
         except Exception as e:
             print(f"Error closing issue {issue_number}: {e}")

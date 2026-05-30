@@ -8,13 +8,14 @@ class Planner:
 
     def create_plan(self, goal: str):
         prompt = f"""
-        You are the SEED Evolution System's Planner.
-        Your goal is to create a step-by-step execution plan for the following task:
+        Kamu adalah Perencana (Planner) Sistem Evolusi SEED.
+        Tujuanmu adalah membuat rencana eksekusi langkah-demi-langkah untuk tugas berikut:
         "{goal}"
 
-        Break down the task into small, actionable steps.
-        Return the plan as a JSON list of strings.
-        Example: ["Import necessary libraries", "Define the main function", "Implement logic", "Verify results"]
+        Pecah tugas menjadi langkah-langkah kecil yang bisa langsung dikerjakan.
+        Kembalikan rencana dalam bentuk list JSON berisi string dalam Bahasa Indonesia.
+        Contoh: ["Import library yang dibutuhkan", "Definisikan fungsi utama", "Implementasikan logika", "Verifikasi hasil"]
+        PENTING: Gunakan Bahasa Indonesia.
         """
         
         messages = [{"role": "user", "content": prompt}]

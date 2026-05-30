@@ -16,13 +16,13 @@ class MetaReasoner:
             })
 
         prompt = f"""
-        Analyze the following evolution history of the SEED system:
+        Analisa sejarah evolusi sistem SEED berikut ini:
         {json.dumps(clean_history, indent=2)}
 
-        Provide high-level insights into the agent's progress, 
-        identify effective vs ineffective mutation strategies, 
-        and suggest long-term architectural improvements.
-        Return the response as a JSON list of strings.
+        Berikan wawasan tingkat tinggi (high-level insights) tentang kemajuan agen, 
+        identifikasi strategi mutasi yang efektif vs tidak efektif, 
+        dan berikan saran peningkatan arsitektur jangka panjang.
+        Kembalikan respon dalam bentuk list JSON berisi string dalam Bahasa Indonesia.
         """
         
         messages = [{"role": "user", "content": prompt}]

@@ -26,12 +26,12 @@ class TelegramTool:
             print(f"Telegram Error: {e}")
 
     def notify_request(self, type, prompt):
-        msg = f"🚀 *LLM REQUEST: {type}*\n\n"
+        msg = f"🚀 *PERMINTAAN LLM: {type}*\n\n"
         msg += f"```\n{prompt[:500]}...\n```"
         self.send_message(msg)
 
     def notify_response(self, type, response):
-        msg = f"✅ *LLM RESPONSE: {type}*\n\n"
+        msg = f"✅ *RESPON LLM: {type}*\n\n"
         msg += f"```\n{response[:500]}...\n```"
         self.send_message(msg)
 
