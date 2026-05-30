@@ -60,11 +60,17 @@ class AutonomousLoop:
             mutation = self.mutation_engine.generate_mutation(reflection)
             print(f"Proposed mutation: {mutation}")
             
+            if mutation == "ERROR_QUOTA":
+                print("🛑 Quota reached during mutation generation. Skipping iteration.")
+                continue
+
             if not mutation:
-                github_tool.create_issue(
-                    f"Evolution Failed - Iteration {iteration + 1}",
-                    f"Mutation Engine failed to generate a proposal.\nReflection: {reflection['insights']}"
-                )
+                # Only create issue if it's a real failure, not a quota error
+                if reflection.get("insights") != "Quota reached or LLM error. Skipping reflection.":
+                    github_tool.create_issue(
+                        f"Evolution Failed - Iteration {iteration + 1}",
+                        f"Mutation Engine failed to generate a proposal.\nReflection: {reflection['insights']}"
+                    )
                 continue
 
             # 3. Safety Check

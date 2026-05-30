@@ -47,6 +47,10 @@ class BenchmarkRunner:
             messages = [{"role": "user", "content": prompt}]
             code = llm.completion(messages)
             
+            if code == "ERROR_QUOTA":
+                print("  - Quota reached, skipping remaining tasks.")
+                break
+                
             if code and "```python" in code:
                 code = code.split("```python")[1].split("```")[0].strip()
             elif code and "```" in code:

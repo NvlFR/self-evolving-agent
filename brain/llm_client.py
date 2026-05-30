@@ -68,8 +68,15 @@ class LLMClient:
             
             return content
         except Exception as e:
-            print(f"LLM Error: {e}")
-            messenger.send_message(f"❌ *LLM ERROR*\n{str(e)}")
+            err_msg = str(e)
+            print(f"LLM Error: {err_msg}")
+            
+            # Check for quota error
+            if "over_quota" in err_msg.lower() or "limit reached" in err_msg.lower():
+                messenger.send_message(f"⌛ *QUOTA REACHED*\nSistem akan skip sisa tugas di siklus ini.")
+                return "ERROR_QUOTA"
+                
+            messenger.send_message(f"❌ *LLM ERROR*\n{err_msg}")
             return None
 
     @staticmethod

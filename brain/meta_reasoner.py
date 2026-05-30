@@ -28,8 +28,13 @@ class MetaReasoner:
         messages = [{"role": "user", "content": prompt}]
         response = llm.completion(messages, request_type="meta")
         
+        if not response or response == "ERROR_QUOTA":
+            return [f"Overall evolution score: {evolution_history[-1]['benchmark_score']:.2f}"]
+            
         try:
             json_str = llm.extract_json(response)
+            if not json_str:
+                return [f"Overall evolution score: {evolution_history[-1]['benchmark_score']:.2f}"]
             insights = json.loads(json_str)
             if isinstance(insights, list):
                 return insights

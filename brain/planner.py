@@ -20,8 +20,13 @@ class Planner:
         messages = [{"role": "user", "content": prompt}]
         response = llm.completion(messages)
         
+        if not response or response == "ERROR_QUOTA":
+            return [f"Deconstruct goal: {goal}", "Execute task", "Return results"]
+            
         try:
             json_str = llm.extract_json(response)
+            if not json_str:
+                return [f"Deconstruct goal: {goal}", "Execute task", "Return results"]
             plan = json.loads(json_str)
             if isinstance(plan, list):
                 return plan

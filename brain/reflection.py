@@ -35,8 +35,19 @@ class ReflectionEngine:
         messages = [{"role": "user", "content": prompt}]
         response = llm.completion(messages)
         
+        if not response or response == "ERROR_QUOTA":
+            return {
+                "insights": "Quota reached or LLM error. Skipping reflection.",
+                "hypotheses": []
+            }
+            
         try:
             json_str = llm.extract_json(response)
+            if not json_str:
+                return {
+                    "insights": "Empty LLM response. Skipping reflection.",
+                    "hypotheses": []
+                }
             reflection = json.loads(json_str)
             self.reflection_history.append(reflection)
             return reflection

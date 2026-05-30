@@ -62,8 +62,13 @@ class MutationEngine:
         messages = [{"role": "user", "content": prompt}]
         response = llm.completion(messages, request_type="evolution")
         
+        if not response or response == "ERROR_QUOTA":
+            return None
+            
         try:
             json_str = llm.extract_json(response)
+            if not json_str:
+                return None
             mutation_data = json.loads(json_str)
             return mutation_data
         except Exception as e:

@@ -25,8 +25,13 @@ class TaskGenerator:
         messages = [{"role": "user", "content": prompt}]
         response = llm.completion(messages)
         
+        if not response or response == "ERROR_QUOTA":
+            return []
+            
         try:
             json_str = llm.extract_json(response)
+            if not json_str:
+                return []
             new_tasks_data = json.loads(json_str)
             new_tasks = []
             for item in new_tasks_data:
