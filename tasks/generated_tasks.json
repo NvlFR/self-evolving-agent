@@ -343,5 +343,15 @@
     "id": "gen_task_69",
     "goal": "Write a function that determines whether a given integer is a prime number.",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_70",
+    "goal": "Write a function that returns the sum of all integers from 1 to n (inclusive).",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_71",
+    "goal": "Implement a function that checks whether a given string is a palindrome, ignoring case and spaces.",
+    "difficulty": 1
   }
 ]
