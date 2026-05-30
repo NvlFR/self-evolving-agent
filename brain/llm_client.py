@@ -7,47 +7,76 @@ load_dotenv(override=True)
 
 class LLMClient:
     def __init__(self):
+        # Primary Config
         self.api_key = os.getenv("ANTHROPIC_API_KEY")
         self.base_url = os.getenv("ANTHROPIC_BASE_URL")
-        self.model = os.getenv("ANTHROPIC_MODEL", "claude-3-5-sonnet-20240620")
-        self.full_model_name = f"anthropic/{self.model}"
+        self.model = os.getenv("ANTHROPIC_MODEL", "cu/claude-4.5-sonnet")
+        
+        # Fallback Config (9router)
+        self.fallback_api_key = "sk-d0e1cbd475c97b59-35bcoc-46bcde6c"
+        self.fallback_base_url = "http://192.168.100.111:20128/v1"
+        self.model_list = self._fetch_model_list()
+        self.current_model_idx = 0
         
         # Request limits
         self.evolution_requests = 0
         self.meta_requests = 0
         self.total_requests = 0
-        
         self.max_evolution = 100 
         self.max_meta = 20
         self.max_total = 300
 
+    def _fetch_model_list(self):
+        import requests
+        try:
+            url = f"{self.fallback_base_url}/models"
+            headers = {"Authorization": f"Bearer {self.fallback_api_key}"}
+            response = requests.get(url, headers=headers, timeout=5)
+            data = response.json()
+            # Return list of model IDs, filter out some if needed
+            return [m["id"] for m in data["data"]]
+        except Exception as e:
+            print(f"Error fetching model list: {e}")
+            return ["cu/claude-4.5-sonnet", "kr/claude-sonnet-4.5-agentic"]
+
     def completion(self, messages, response_format=None, request_type="utility"):
-        # request_type: "evolution", "meta", "utility"
+        # 1. Try Primary
+        result = self._attempt_completion(messages, self.api_key, self.base_url, self.model, request_type, is_fallback=False)
         
+        # 2. Try Fallbacks
+        while result == "ERROR_QUOTA" and self.current_model_idx < len(self.model_list):
+            fallback_model = self.model_list[self.current_model_idx]
+            self.current_model_idx += 1
+            
+            print(f"Primary quota exceeded. Switching to fallback model: {fallback_model}...")
+            messenger.send_message(f"⚠️ *Primary Quota Exceeded. Switched to Fallback Model:* `{fallback_model}`")
+            
+            result = self._attempt_completion(messages, self.fallback_api_key, self.fallback_base_url, fallback_model, request_type, is_fallback=True)
+            
+        return result
+
+    def _attempt_completion(self, messages, api_key, base_url, model, request_type, is_fallback):
         # Enforce limits
         if self.total_requests >= self.max_total:
             print(f"🛑 Global LLM request limit reached ({self.max_total}).")
             return None
         
-        if request_type == "evolution" and self.evolution_requests >= self.max_evolution:
-            print(f"🛑 Evolution request limit reached ({self.max_evolution}).")
-            return None
-            
-        if request_type == "meta" and self.meta_requests >= self.max_meta:
-            print(f"🛑 Meta Reasoning request limit reached ({self.max_meta}).")
-            return None
-
-        # Notify Telegram Request
-        prompt = messages[-1]['content']
-        messenger.notify_request(request_type.upper(), prompt)
+        # Notify Telegram Request (only once)
+        if not is_fallback or (is_fallback and self.current_model_idx == 1):
+            prompt = messages[-1]['content']
+            messenger.notify_request(request_type.upper(), prompt)
         
         try:
+            custom_headers = {}
+            if api_key:
+                custom_headers["Authorization"] = f"Bearer {api_key}"
+            
             response = litellm.completion(
-                model=self.full_model_name,
+                model=model,
                 messages=messages,
-                api_key=self.api_key,
-                base_url=self.base_url,
-                response_format=response_format
+                api_base=base_url,
+                api_key=api_key or "sk-dummy",
+                headers=custom_headers
             )
             content = response.choices[0].message.content
             
@@ -58,25 +87,25 @@ class LLMClient:
             elif request_type == "meta":
                 self.meta_requests += 1
 
-            # Log raw response for debugging
+            # Log raw response
             with open("logs/llm_raw.log", "a") as f:
-                f.write(f"\n--- PROMPT ({request_type}) ---\n{prompt[:200]}...\n")
+                f.write(f"\n--- PROMPT ({request_type}, model={model}, fallback={is_fallback}) ---\n{messages[-1]['content'][:200]}...\n")
                 f.write(f"--- RESPONSE ---\n{content}\n")
             
-            # Notify Telegram Response
-            messenger.notify_response(request_type.upper(), content)
+            # Notify Telegram
+            if not is_fallback or (is_fallback and self.current_model_idx == 1):
+                messenger.notify_response(request_type.upper(), content)
             
             return content
+        except litellm.RateLimitError:
+            return "ERROR_QUOTA"
         except Exception as e:
             err_msg = str(e)
-            print(f"LLM Error: {err_msg}")
-            
-            # Check for quota error
-            if "over_quota" in err_msg.lower() or "limit reached" in err_msg.lower():
-                messenger.send_message(f"⌛ *QUOTA REACHED*\nSistem akan skip sisa tugas di siklus ini.")
+            if "over_quota" in err_msg.lower() or "limit reached" in err_msg.lower() or "ratelimiterror" in err_msg.lower():
                 return "ERROR_QUOTA"
-                
-            messenger.send_message(f"❌ *LLM ERROR*\n{err_msg}")
+            print(f"LLM Error (model={model}, fallback={is_fallback}): {err_msg}")
+            if not is_fallback:
+                messenger.send_message(f"❌ *LLM ERROR*\n{err_msg}")
             return None
 
     @staticmethod
