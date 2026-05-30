@@ -47,6 +47,9 @@ class AutonomousLoop:
 
         for iteration in range(iterations):
             print(f"\n=== Iterasi Evolusi {iteration + 1} ===")
+            
+            # Force execute project tasks
+            project_manager.execute_active_project()
 
             # Generate new tasks for this iteration
             new_tasks = self.task_generator.generate_tasks(count=2, difficulty=iteration + 1)
