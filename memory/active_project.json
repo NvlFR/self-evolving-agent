@@ -1,0 +1,248 @@
+{
+  "name": "task-tracker",
+  "path": "projects/task-tracker",
+  "status": "in_progress",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Inisialisasi struktur proyek",
+      "description": "Buat folder\u202fsrc,\u202ftests,\u202fdocs\u202fserta file utama CLI agar proyek mudah dikelola dan dipelihara.",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "title": "Buat file .gitignore",
+      "description": "Tambahkan aturan agar file\u202f__pycache__*,\u202f*.pyc,\u202fvenv/\u202fdan\u202f*.egg-info\u202ftidak ikut ke repositori.",
+      "priority": "high"
+    },
+    {
+      "id": 3,
+      "title": "Setup virtual environment",
+      "description": "Buat dan aktifkan\u202fvenv\u202funtuk mengisolasi dependensi proyek.",
+      "priority": "high"
+    },
+    {
+      "id": 4,
+      "title": "Pilih bahasa & buat entry point",
+      "description": "Tentukan bahasa pemrograman (mis. Python) dan buat file entry point\u202fmain.py\u202fyang akan dipanggil dari CLI.",
+      "priority": "high"
+    },
+    {
+      "id": 5,
+      "title": "Daftar dependensi di requirements.txt",
+      "description": "Cantumkan paket yang dibutuhkan (mis.\u202fclick\u202funtuk CLI,\u202fpytest\u202funtuk testing,\u202fblack\u202funtuk format kode).",
+      "priority": "high"
+    },
+    {
+      "id": 6,
+      "title": "Pasang dependensi",
+      "description": "Jalankan\u202fpip install -r requirements.txt\u202fagar semua paket tersedia di lingkungan pengembangan.",
+      "priority": "high"
+    },
+    {
+      "id": 7,
+      "title": "Implementasikan parser argumen CLI",
+      "description": "Gunakan library CLI (mis.\u202fclick\u202fatau\u202fargparse) untuk mendefinisikan perintah\u202fadd,\u202flist,\u202fdone\u202fdan opsi\u202f--help\u202fserta\u202f--version.",
+      "priority": "high"
+    },
+    {
+      "id": 8,
+      "title": "Definisikan model Task",
+      "description": "Buat kelas\u202fTask\u202fdengan atribut\u202fid,\u202ftitle,\u202fdescription,\u202fstatus,\u202fcreated_at,\u202fcompleted_at\u202fbeserta metode bantu seperti\u202fto_dict\u202fdan\u202ffrom_dict.",
+      "priority": "high"
+    },
+    {
+      "id": 9,
+      "title": "Implementasikan fungsi load_tasks",
+      "description": "Fungsi yang membaca file\u202ftasks.json\u202fdan mengembalikan list objek\u202fTask. Tangani kasus file belum ada atau corrupt.",
+      "priority": "high"
+    },
+    {
+      "id": 10,
+      "title": "Implementasikan fungsi save_tasks",
+      "description": "Fungsi yang menerima list\u202fTask\u202fdan menulisnya ke\u202ftasks.json\u202fsecara atomik ( tulis ke file sementara lalu rename ) untuk menghindari korupsi data.",
+      "priority": "high"
+    },
+    {
+      "id": 11,
+      "title": "Implementasikan perintah add",
+      "description": "Ambil argumen\u202ftitle\u202fdan\u202fdescription\u202fdari CLI, buat objek\u202fTask\u202f baru, simpan ke list, lalu panggil\u202fsave_tasks.",
+      "priority": "high"
+    },
+    {
+      "id": 12,
+      "title": "Implementasikan perintah list",
+      "description": "Muat semua tugas dari\u202ftasks.json, format output (mis. tabel berwarna) dan tampilkan status masing\u2011masing tugas.",
+      "priority": "high"
+    },
+    {
+      "id": 13,
+      "title": "Implementasikan perintah done",
+      "description": "Terima\u202fid\u202ftugas, cari tugas yang sesuai, ubah status menjadi selesai, isi\u202fcompleted_at, lalu simpan kembali ke JSON.",
+      "priority": "high"
+    },
+    {
+      "id": 14,
+      "title": "Tangani file JSON tidak ada",
+      "description": "Saat load_tasks gagal karena file belum ada, buat file kosong berisi array\u202f[]\u202ftanpa memunculkan error.",
+      "priority": "high"
+    },
+    {
+      "id": 15,
+      "title": "Tangani error izin baca/tulis",
+      "description": "Bungkus operasi file dengan\u00a0try/except\u00a0dan berikan pesan error yang ramah pengguna saat terjadi masalah izin.",
+      "priority": "high"
+    },
+    {
+      "id": 16,
+      "title": "Tambahkan logging untuk debugging",
+      "description": "Konfigurasi modul\u202flogging\u202fagar log ditampilkan ke stderr pada level DEBUG saat environment variable\u202fDEBUG=1.",
+      "priority": "medium"
+    },
+    {
+      "id": 17,
+      "title": "Buat unit test untuk load/save tasks",
+      "description": "Tulis tes yang memverifikasi fungsi\u00a0load_tasks dan\u00a0save_tasks bekerja dengan data normal, kosong, dan corrupt.",
+      "priority": "medium"
+    },
+    {
+      "id": 18,
+      "title": "Buat unit test untuk perintah add",
+      "description": "Tes apakah perintah add berhasil menambahkan tugas, validasi judul kosong, dan panjang judul maksimum.",
+      "priority": "medium"
+    },
+    {
+      "id": 19,
+      "title": "Buat unit test untuk perintah list",
+      "description": "Tes tampilan list dengan berbagai kondisi: tanpa tugas, satu tugas, banyak tugas, serta formatasi output.",
+      "priority": "medium"
+    },
+    {
+      "id": 20,
+      "title": "Buat unit test untuk perintah done",
+      "description": "Tes apakah ID yang valid mengubah status, ID tidak ditemukan memunculkan pesan error, dan status tidak bisa di\u2011done dua kali.",
+      "priority": "medium"
+    },
+    {
+      "id": 21,
+      "title": "Buat integration test untuk CLI",
+      "description": "Gunakan\u202fsubprocess\u202funtuk menjalankan perintah CLI secara utuh dan verifikasi hasil (exit code, stdout, stderr).",
+      "priority": "medium"
+    },
+    {
+      "id": 22,
+      "title": "Setup CI/CD pipeline",
+      "description": "Konfigurasi GitHub Actions agar setiap push menjalankan\u202fpytest\u202fdan linting, serta membangun distribusi paket.",
+      "priority": "medium"
+    },
+    {
+      "id": 23,
+      "title": "Tambahkan linter dan formatter",
+      "description": "Integrasikan\u202fblack,\u202fflake8/pylint\u00a0dan buat konfigurasi (.flake8, pyproject.toml) serta script\u202fpre-commit.",
+      "priority": "medium"
+    },
+    {
+      "id": 24,
+      "title": "Buat paket distribusi (setup.py / pyproject.toml)",
+      "description": "Definisikan metadata proyek, \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u0438, dan entry point untuk instalasi paket dengan\u00a0pip install -e .",
+      "priority": "medium"
+    },
+    {
+      "id": 25,
+      "title": "Daftarkan entry point console_scripts",
+      "description": "Tambahkan console_scripts di setup.py / pyproject.toml agar perintah\u202ftask-tracker\u202ftersedia langsung dari terminal setelah instalasi.",
+      "priority": "medium"
+    },
+    {
+      "id": 26,
+      "title": "Tulis dokumentasi penggunaan di README",
+      "description": "Jelaskan cara instalasi, perintah CLI yang tersedia, contoh penggunaan, dan opsi tambahan seperti\u202f--help\u202fdan\u202f--version.",
+      "priority": "medium"
+    },
+    {
+      "id": 27,
+      "title": "Tambahkan contoh penggunaan (screenshot/video GIF)",
+      "description": "Sertakan cuplikan layar atau GIF singkat yang menunjukkan alur kerja utama aplikasi di README.",
+      "priority": "low"
+    },
+    {
+      "id": 28,
+      "title": "Tambahkan opsi --version",
+      "description": "Implementasikan flag\u202f--version\u202fyang menampilkan versi semantik proyek (mis. dari\u202f__version__).",
+      "priority": "low"
+    },
+    {
+      "id": 29,
+      "title": "Tambahkan fitur sorting pada list",
+      "description": "Sediakan opsi\u202f--sort\u202fyang bisa mengurutkan tugas berdasarkan tanggal pembuatan, tanggal selesai, atau prioritas.",
+      "priority": "low"
+    },
+    {
+      "id": 30,
+      "title": "Tambahkan field prioritas ke Task",
+      "description": "Perluas model\u00a0Task\u00a0dengan atribut\u202fpriority\u202fyang bernilai\u202fhigh,\u202fmedium, atau\u202flow, serta perbarui perintah add dan list.",
+      "priority": "low"
+    },
+    {
+      "id": 31,
+      "title": "Tambahkan field due_date ke Task",
+      "description": "Tambahkan kolom\u202fdue_date\u202f(ISO 8601) danvalidasi formatnya saat input, lalu tampilkan tanggal jatuh tempo di list.",
+      "priority": "low"
+    },
+    {
+      "id": 32,
+      "title": "Dukungan multi\u2011bahasa untuk pesan CLI",
+      "description": "Sediakan file terjemahan (mis.\u202f.pot/.po) agar pesan error dan sukses bisa ditampilkan dalam bahasa lokal.",
+      "priority": "low"
+    },
+    {
+      "id": 33,
+      "title": "Fitur export/import CSV",
+      "description": "Tambahkan perintah\u202fexport\u202fdan\u202fimport\u202fyang menghasilkan atau membaca file CSV berisi daftar tugas.",
+      "priority": "low"
+    },
+    {
+      "id": 34,
+      "title": "Optimasi penyimpanan: atomic write & file locking",
+      "description": "Gunakan penulisan atomik (temp \u2192 rename) dan tambahkan mekanisme file locking untuk mencegah race condition saat banyak proses mengakses sekaligus.",
+      "priority": "low"
+    },
+    {
+      "id": 35,
+      "title": "Tambahkan laporan coverage",
+      "description": "Integrasikan\u202fcoverage.py\u202fke CI agar laporan code coverage dihasilkan dan dipublikasikan ke layanan seperti Codecov.",
+      "priority": "low"
+    },
+    {
+      "id": 36,
+      "title": "Buat CHANGELOG dan versioning semantik",
+      "description": "Buat file\u202fCHANGELOG.md\u202fdan gunakan versioning semantik (vX.Y.Z) untuk menandai setiap rilis.",
+      "priority": "low"
+    },
+    {
+      "id": 37,
+      "title": "Dockerisasi aplikasi",
+      "description": "Tambahkan\u202fDockerfile\u202fdan\u202fdocker-compose.yml\u202fagar pengguna bisa menjalankan aplikasi tanpa perlu menginstall Python secara lokal.",
+      "priority": "low"
+    },
+    {
+      "id": 38,
+      "title": "Audit keamanan dependensi",
+      "description": "Jalankan\u202fpip-audit\u202fatau\u202fsafety\u202fpada CI untuk mendeteksi kerentanan pada paket yang digunakan.",
+      "priority": "low"
+    },
+    {
+      "id": 39,
+      "title": "Buat script instalasi otomatis (Makefile)",
+      "description": "Tambahkan\u202fMakefile\u202fdengan target seperti\u202fmake install,\u202fmake test,\u202fmake lint\u202funtuk menyederhanakan proses pengembangan.",
+      "priority": "low"
+    },
+    {
+      "id": 40,
+      "title": "Dokumentasikan API internal (docstring)",
+      "description": "Lengkapi semua fungsi dan kelas dengan docstring yang jelas dalam format Google atau NumPy, sehingga memudahkan onboarding developer baru.",
+      "priority": "low"
+    }
+  ],
+  "current_task_index": 1
+}

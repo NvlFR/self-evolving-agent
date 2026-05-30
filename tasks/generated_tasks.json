@@ -353,5 +353,15 @@
     "id": "gen_task_71",
     "goal": "Implement a function that checks whether a given string is a palindrome, ignoring case and spaces.",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_72",
+    "goal": "Write a function that takes two integers as input and returns their sum.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_73",
+    "goal": "Create a function that determines whether a given string is a palindrome (ignoring spaces and case).",
+    "difficulty": 1
   }
 ]
