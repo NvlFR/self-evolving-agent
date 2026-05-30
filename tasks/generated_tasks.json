@@ -363,5 +363,25 @@
     "id": "gen_task_73",
     "goal": "Create a function that determines whether a given string is a palindrome (ignoring spaces and case).",
     "difficulty": 1
+  },
+  {
+    "id": "gen_task_74",
+    "goal": "Write a function that takes a list of numbers and returns the sum of all even numbers in the list.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_75",
+    "goal": "Implement a function that checks whether a given string is a palindrome, ignoring case and non\u2011alphanumeric characters.",
+    "difficulty": 1
+  },
+  {
+    "id": "gen_task_76",
+    "goal": "Write a function that determines whether a given string consists only of correctly nested parentheses, brackets, and braces.",
+    "difficulty": 2
+  },
+  {
+    "id": "gen_task_77",
+    "goal": "Implement a basic LRU (Least Recently Used) cache with `get(key)` and `put(key, value)` methods using Python's `collections.OrderedDict`.",
+    "difficulty": 2
   }
 ]

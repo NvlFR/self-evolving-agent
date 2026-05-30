@@ -10,8 +10,8 @@ class SafetyGuard:
         if not isinstance(mutation, dict):
             return True # Or handle legacy string mutations if needed
             
-        code = mutation.get("code", "")
-        description = mutation.get("description", "")
+        code = mutation.get("code") or ""
+        description = mutation.get("description") or ""
         
         # Check code and description for forbidden patterns
         for pattern in self.FORBIDDEN_PATTERNS:

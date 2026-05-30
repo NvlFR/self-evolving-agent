@@ -21,9 +21,13 @@ class TelegramTool:
         }
         
         try:
-            requests.post(self.base_url, json=payload, timeout=10)
+            response = requests.post(self.base_url, json=payload, timeout=10)
+            if response.status_code == 200:
+                print(f"Telegram Message Sent: {text[:50]}...")
+            else:
+                print(f"Telegram API Error: {response.status_code} - {response.text}")
         except Exception as e:
-            print(f"Telegram Error: {e}")
+            print(f"Telegram Connection Error: {e}")
 
     def notify_request(self, type, prompt):
         msg = f"🚀 *PERMINTAAN LLM: {type}*\n\n"
