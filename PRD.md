@@ -237,10 +237,22 @@ Required:
 ## AI
 - OpenAI API
 - or local models via Ollama
+- Multi-provider Fallback (Olagon as primary, 9Router as multi-model fallback)
 
 ## Optional
 - LangGraph
 - LiteLLM
+
+---
+
+# 11. Resilience & Reliability
+
+## AI Provider Fallback
+To ensure continuous operation without human intervention, the system implements a robust multi-provider fallback strategy:
+- **Primary Provider:** Olagon (high-capability models).
+- **Secondary Provider:** 9Router (multi-model local/proxy fallback).
+- **Fallback Triggers:** 429 (Rate Limit), 401 (Authentication Error), Quota Exceeded, or Provider Unavailability.
+- **Dynamic Model Rotation:** If a fallback model fails, the system automatically cycles through a verified list of alternative models from 9Router to find a responsive one.
 
 ---
 
