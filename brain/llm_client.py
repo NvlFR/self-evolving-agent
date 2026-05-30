@@ -123,7 +123,6 @@ class LLMClient:
         
         with open(log_file, "a") as f:
             f.write(f"\n--- REQUEST ({model}) ---\n{json.dumps(messages)}\n")
-        
         try:
             custom_headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
             
