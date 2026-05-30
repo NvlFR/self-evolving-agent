@@ -1,8 +1,6 @@
 import os
 import litellm
 import requests
-import json
-import re
 from dotenv import load_dotenv
 from brain.messenger import messenger
 
@@ -10,7 +8,7 @@ load_dotenv(override=True)
 
 class LLMClient:
     def __init__(self):
-        # Primary Config
+        # Primary Config (Anthropic via Proxy)
         self.api_key = os.getenv("ANTHROPIC_API_KEY")
         self.base_url = os.getenv("ANTHROPIC_BASE_URL")
         self.model = os.getenv("ANTHROPIC_MODEL", "cu/claude-4.5-sonnet")
@@ -57,15 +55,20 @@ class LLMClient:
         return result
 
     def _attempt_completion(self, messages, api_key, base_url, model, request_type, is_fallback):
+        # Enforce limits
         if self.total_requests >= self.max_total:
+            print(f"🛑 Global LLM request limit reached ({self.max_total}).")
             return None
         
+        # Notify Telegram Request
         if not is_fallback:
             prompt = messages[-1]['content']
             messenger.notify_request(request_type.upper(), prompt)
         
         try:
-            custom_headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
+            custom_headers = {}
+            if api_key:
+                custom_headers["Authorization"] = f"Bearer {api_key}"
             
             response = litellm.completion(
                 model=model,
@@ -80,16 +83,16 @@ class LLMClient:
             if request_type == "evolution": self.evolution_requests += 1
             elif request_type == "meta": self.meta_requests += 1
 
-            if not is_fallback:
-                messenger.notify_response(request_type.upper(), content)
+            if not is_fallback: messenger.notify_response(request_type.upper(), content)
             
             return content
         except Exception as e:
             err_msg = str(e).lower()
+            # Force fallback for ALL rate limits, 429s, and unavailabilities
             if any(term in err_msg for term in ["rate", "429", "over_quota", "limit reached", "ratelimiterror", "unavailable"]):
                 return "ERROR_QUOTA"
-            
-            print(f"LLM Error (model={model}, fallback={is_fallback}): {err_msg}")
+                
+            print(f"LLM Error (model={model}): {err_msg}")
             if not is_fallback:
                 messenger.send_message(f"❌ *LLM ERROR*\n{err_msg[:200]}")
             return None
@@ -97,18 +100,9 @@ class LLMClient:
     @staticmethod
     def extract_json(text):
         if not text: return ""
+        import json, re
         
-        # Strategy 1: Look for JSON code blocks
-        json_blocks = re.findall(r"```json\s*(.*?)\s*```", text, re.DOTALL)
-        if json_blocks: return json_blocks[-1].strip()
-            
-        json_blocks = re.findall(r"```\s*(.*?)\s*```", text, re.DOTALL)
-        if json_blocks:
-            for block in reversed(json_blocks):
-                candidate = block.strip()
-                if candidate.startswith(("{", "[")): return candidate
-
-        # Strategy 2: Search for the last valid JSON
+        # Strategy: Look for the *last* valid JSON object/list
         best_json = ""
         for i in range(len(text)):
             if text[i] in ('{', '['):
